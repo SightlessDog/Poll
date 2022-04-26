@@ -23,6 +23,12 @@ app.get("/", (req, res) => {
 
 app.get("/items/:vegetables", homeController.sendReqParam)
 
+// Get the pin coordinates
+app.get("/map/:lat&:lon", homeController.sendCoordinates)
+// Post teh pin coords
+// We will use the same controller for the moment, but later when we have logic this will change 
+// TODO
+app.post("/map/:lat&:lon", homeController.sendCoordinates)
 
 app.listen(port, () => {
     console.log(`The Express.js server has started and is listening
