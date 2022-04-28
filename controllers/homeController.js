@@ -10,3 +10,7 @@ exports.sendCoordinates = (req, res) => {
     // let id = id.set(); 
     res.send("Coordinates for the Pin are:" + lat + ", " + lon);
 };
+
+exports.mapIndex = (req, res) => {
+    res.send("This will be the page for the Map");
+}
