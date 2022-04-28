@@ -10,3 +10,9 @@ exports.sendCoordinates = (req, res) => {
     // let id = id.set(); 
     res.send("Coordinates for the Pin are:" + lat + ", " + lon);
 };
+
+exports.sendProfileId = (req, res) => {
+    let userId = req.params.userId;
+    //Set id for profile
+    res.send("Profile of " + userId);
+}
