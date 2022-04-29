@@ -16,3 +16,9 @@ exports.sendProfileId = (req, res) => {
     //Set id for profile
     res.send("Profile of " + userId);
 }
+
+exports.sendUploadPhotos = (req, res) => {
+    let uploadPhotos = req.params.uploadPhotos;
+    //set id for uploading photos
+    res.send("Photos: " + uploadPhotos);
+}
