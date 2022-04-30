@@ -3,12 +3,9 @@ exports.sendReqParam = (req, res) => {
     res.send(`This is the page for ${veg}`);
 };
 
-exports.sendCoordinates = (req, res) => {
-    let lat = req.params.lat;
-    let lon = req.params.lon;
-    // Set id for the pin
-    // let id = id.set(); 
-    res.send("Coordinates for the Pin are:" + lat + ", " + lon);
+exports.sendEventId = (req, res) => {
+    let lat = req.params.id;
+    res.send("Coordinates for the Pin are:" + id);
 };
 
 exports.sendProfileId = (req, res) => {
