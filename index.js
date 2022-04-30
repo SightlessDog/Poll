@@ -10,6 +10,8 @@ app.set("port", process.env.PORT || 3000);
 
 app.use(layouts)
 
+app.use(express.static(__dirname + '/public'));
+
 // This is a custom middleware
 app.use("/", (req, res, next) => {
     console.log(req.params);
@@ -28,7 +30,7 @@ app.get("/", (req, res) => {
     res.render("index");
 }); 
 
-app.get("events", homeController.showEvents)
+app.get("/events", homeController.showEvents)
 
 app.get("/signup", homeController.showSignUp);
 

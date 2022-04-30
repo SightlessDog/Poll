@@ -1,3 +1,24 @@
+var events = [
+    {
+    title: "Mathe",
+    date: "12.10.2022",
+    onlineVotes: 12, 
+    presenceVotes: 10
+    },
+    {
+    title: "Info",
+    date: "12.10.2022", 
+    onlineVotes: 12, 
+    presenceVotes: 10
+    },
+    {
+    title: "Fußball",
+    date: "12.10.2022",
+    onlineVotes: 12, 
+    presenceVotes: 10
+    }
+];
+
 exports.sendReqParam = (req, res) => {
     let veg = req.params.vegetable;
     res.send(`This is the page for ${veg}`);
@@ -15,7 +36,7 @@ exports.sendProfileId = (req, res) => {
 }
 
 exports.showEvents = (req, res) => {
-    res.render("Events/events");
+    res.render("Events/events", {events: events});
 }
 
 exports.showSignUp = (req, res) => {

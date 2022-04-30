@@ -1,0 +1,27 @@
+#title {
+    color: #253b56;
+}
+
+#events-container {
+    width: 100vw;
+    height: auto; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#event {
+    color: #8294aa;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color, color 0.25ms ease-in-out;
+    box-shadow: 0 5px 8px rgba(0,0,0,0.30), 0 5px 4px rgba(0,0,0,0.22);
+}
+
+#event:hover {
+    background-color: #8294aa;
+    color: #253b56;
+    cursor: pointer;
+}
