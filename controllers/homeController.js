@@ -4,12 +4,24 @@ exports.sendReqParam = (req, res) => {
 };
 
 exports.sendEventId = (req, res) => {
-    let lat = req.params.id;
-    res.send("Coordinates for the Pin are:" + id);
+    let id = req.params.id;
+    res.render("/Profile/profile", {name: id});
 };
 
 exports.sendProfileId = (req, res) => {
     let userId = req.params.userId;
     //Set id for profile
-    res.send("Profile of " + userId);
+    res.render("Profile/profile", {name: userId});
+}
+
+exports.showEvents = (req, res) => {
+    res.render("Events/events");
+}
+
+exports.showSignUp = (req, res) => {
+    res.render("SignUp/signUp");
+};
+
+exports.showThanks = (req, res) => {
+    res.render("Thanks/thanks");
 }
