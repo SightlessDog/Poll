@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="css/app.css">
+
+<h1 id="title">Voted Events</h1>
+<div id="events-container">
+<% votedEvents.forEach(votedEvents => { %>
+    <div id="event">
+ <h5> <%= votedEvents.title %> </h5>
+ <span>Event date: </span><span><%= votedEvents.date %> </span><br/>
+ <span>Total Votes: </span><span> <%= votedEvents.totalVotes %> </span><br/>
+ <span>Final Result: </span><span> <%= votedEvents.finalResult %> </span><br/>
+</div>
+<% }); %>
+</div>
