@@ -25,3 +25,38 @@
     color: #253b56;
     cursor: pointer;
 }
+
+/* Keep footer at bottom*/
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+#container {
+   min-height:100%;
+   position:relative;
+}
+#body {
+   padding:10px;
+   padding-bottom:60px;   /* Height of the footer */
+}
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;   /* Height of the footer */
+   background:#6cf;
+}
+
+/*TODO: add this with # to nav (Keep nav at top )*/
+nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background:#6cf;
+  color: white;
+  font-family: 'Exo 2', sans-serif;
+  padding: 1em;
+  }
