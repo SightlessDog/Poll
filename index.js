@@ -34,6 +34,8 @@ app.get("/events", homeController.showEvents)
 
 app.get("/signup", homeController.showSignUp);
 
+app.get("/votedEvents", homeController.showVotedEvents)
+
 app.post("/signup", homeController.showThanks)
 
 // Get the event id
