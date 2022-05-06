@@ -54,8 +54,8 @@ exports.showEvents = (req, res) => {
     res.render("Events/events", {events: events});
 }
 
-exports.showSignUp = (req, res) => {
-    res.render("SignUp/signUp");
+exports.showRegister = (req, res) => {
+    res.render("Register/index");
 };
 
 exports.showVotedEvents = (req, res) => {
@@ -65,3 +65,8 @@ exports.showVotedEvents = (req, res) => {
 exports.showThanks = (req, res) => {
     res.render("Thanks/thanks");
 }
+
+exports.showProfile = (req, res) => {
+    res.render("Profile/index");
+}
+

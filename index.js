@@ -2,7 +2,40 @@ const homeController = require("./controllers/homeController");
 const errorController = require("./controllers/errorController")
 const express = require('express');
 const layouts = require("express-ejs-layouts")
+const mongoose = require("mongoose");
+const router = require("./routes/index");
 const app = express();
+const passport = require("passport")
+const User = require("./models/user"); //needed functionality for passport to work
+const expressSession = require("express-session")
+
+app.use(
+    expressSession({
+        secret: "secretContract",
+        cookie: {
+            maxAge: 4000000
+        },
+        resave: false,
+        saveUninitialized: false
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+    res.locals.loggedIn = req.isAuthenticated();
+    res.locals.currentUser = req.user;
+    next();
+});
+let dburl = "mongodb://localhost:27017/Poll";
+mongoose.connect( dburl)
+    .then(() => { console.log('Connected to MongoDB: %s ', dburl ) })
+    .catch((err) => { console.error('MongoDB connection error: %s \n', err); });
+
 
 app.set("view engine", "ejs")
 
@@ -32,11 +65,13 @@ app.get("/", (req, res) => {
 
 app.get("/events", homeController.showEvents)
 
-app.get("/signup", homeController.showSignUp);
+app.get("/Register", homeController.showRegister);
+
+app.get("/Profile", homeController.showProfile);
 
 app.get("/votedEvents", homeController.showVotedEvents)
 
-app.post("/signup", homeController.showThanks)
+//app.post("/Register", homeController.showThanks)
 
 // Get the event id
 app.get("/event/:id", homeController.sendEventId)
@@ -50,7 +85,7 @@ app.get("/profile/:userId", homeController.sendProfileId);
 
 // Post userId
 app.post("/profile/:userId", homeController.sendProfileId);
-
+app.use("/", router);
 app.use(errorController.respondNoResourceFound)
 app.use(errorController.respondInternalError)
 
