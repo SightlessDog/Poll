@@ -1,4 +1,8 @@
 const homeController = require("./controllers/homeController");
+const eventsController = require("./controllers/eventsController");
+const votedEventsController = require("./controllers/votedEventsController");
+const thanksController = require("./controllers/thanksController");
+const signUpController = require("./controllers/signUpController");
 const errorController = require("./controllers/errorController")
 const express = require('express');
 const layouts = require("express-ejs-layouts")
@@ -30,13 +34,13 @@ app.get("/", (req, res) => {
     res.render("index");
 }); 
 
-app.get("/events", homeController.showEvents)
+app.get("/events", eventsController.showEvents)
 
-app.get("/signup", homeController.showSignUp);
+app.get("/signup", signUpController.showSignUp);
 
-app.get("/votedEvents", homeController.showVotedEvents)
+app.get("/votedEvents", votedEventsController.showVotedEvents)
 
-app.post("/signup", homeController.showThanks)
+app.post("/signup", thanksController.showThanks)
 
 // Get the event id
 app.get("/event/:id", homeController.sendEventId)
