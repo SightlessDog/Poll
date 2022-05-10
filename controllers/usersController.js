@@ -1,21 +1,19 @@
 const User = require('../models/user');
 const passport = require("passport");
 const { body, validationResult } = require('express-validator');
-const {getUserInfo} = require("./usersController");
 
-module.exports = {
-
-    getUserInfo: body => {
+    getUserInfo = body => {
         return {
+            roles: body.role,
             name: {
                 first: body.first,
                 last: body.last
             },
-            email: req.body.email,
-            password: req.body.password
-        }
-
-    },
+            email: body.email,
+            password: body.password
+        };
+    };
+module.exports = {
 
     index: (req, res) => {
         res.render("Profile/index");

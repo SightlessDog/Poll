@@ -6,6 +6,6 @@ const router = require("express").Router(),
 router.get("/", usersController.index);
 //router.post("/Register", usersController.createUser2);
 router.get("/")
-router.post("/create", usersController.validate, usersController.createUser2, usersController.redirectView)
+router.post("/create", usersController.validate, usersController.createUser, usersController.redirectView)
 
 module.exports = router;
