@@ -1,5 +1,6 @@
 const homeController = require("./controllers/homeController");
 const eventsController = require("./controllers/eventsController");
+const eventController = require("./controllers/eventController");
 const votedEventsController = require("./controllers/votedEventsController");
 const thanksController = require("./controllers/thanksController");
 const signUpController = require("./controllers/signUpController");
@@ -29,7 +30,6 @@ const eventOne = new Event({
 
 eventOne.save((error, savedDoc) => {
     if (error) console.log(error);
-    console.log(savedDoc);
 })
 
 app.set("view engine", "ejs")
@@ -58,6 +58,10 @@ app.get("/", (req, res) => {
     res.render("index");
 }); 
 
+app.get("/events/:id", eventController.showEventPage)
+
+app.post("/events/:id", eventController.postVote)
+
 app.get("/events", eventsController.showEvents)
 
 app.get("/signup", signUpController.showSignUp);
@@ -65,9 +69,6 @@ app.get("/signup", signUpController.showSignUp);
 app.get("/votedEvents", votedEventsController.showVotedEvents)
 
 app.post("/signup", thanksController.showThanks)
-
-// Get the event id
-app.get("/event/:id", homeController.sendEventId)
 // Post a new event
 // We will use the same controller for the moment, but later when we have logic this will change 
 // TODO I am not sure about this, usually you do a post request and then you get the id back but we'll see :)

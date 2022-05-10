@@ -4,12 +4,12 @@
 <h1 id="title">Events</h1>
 <div id="events-container">
 <% events.forEach(event => { %>
-    <div id="event">
+<a href="/events/<%= event._id %>"  id="event">
  <h5> <%= event.title %> </h5>
  <span>event date: </span><span><%= event.date %> </span><br/>
  <span>Online Votes: </span><span> <%= event.onlineVotes %> </span><br/>
  <span>Presence Votes: </span><span> <%= event.presenceVotes %> </span><br/>
-</div>
+</a>
 <% }); %>
-</div>
+</a>
 </div>
