@@ -27,8 +27,7 @@ module.exports = {
         else next();
     },
     validate: (req, res, next) => {
-        body('email').isEmail().normalizeEmail()
-        console.log('in validate');
+        body('email').isEmail().normalizeEmail();
         // Finds the validation errors in this request
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -45,14 +44,12 @@ module.exports = {
             //register the user and save in the database or throw an error if unsuccessful
             User.register(newUser, req.body.password, (error, user) => {
                 if (user) {
-                    req.flash("Sucess!", `Account with name ${user.fullName} successfully created!`);
-                    res.locals.redirect = "/Home";
-                    console.log('lol');
+                    res.locals.redirect = "/";
+                    console.log('Successfully registered!');
                     next();
                 } else {
-                    req.flash("Error!", `Account could not be created, because: ${e.message}.`);
                     res.locals.redirect = "/Register/index";
-                    console.log('not lol');
+                    console.log('Unsuccessful registration!');
                     next();
                 }
             });
@@ -60,7 +57,6 @@ module.exports = {
 
         createUser2: async (req, res, next) => {
             let user = await User.findOne({ email: req.body.email });
-            console.log('in lol');
             if (user) {
                 return res.status(400).send('That user already exisits!');
             } else {
