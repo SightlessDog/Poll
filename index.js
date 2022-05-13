@@ -1,6 +1,6 @@
 const homeController = require("./controllers/homeController");
 const eventsController = require("./controllers/eventsController");
-const eventController = require("./controllers/eventController");
+const singleEventController = require("./controllers/singleEventController");
 const votedEventsController = require("./controllers/votedEventsController");
 const thanksController = require("./controllers/thanksController");
 const signUpController = require("./controllers/signUpController");
@@ -9,10 +9,10 @@ const express = require('express');
 const layouts = require("express-ejs-layouts")
 const app = express();
 const mongoose = require("mongoose");
-const Event = require("./models/event");
+const event = require("./models/event");
 
 mongoose.connect(
- "mongodb://localhost:27017/mongodb-poll",
+ "mongodb://127.0.0.1:27017/mongodb-poll",
  );
  {useNewUrlParser: true}
 const db = mongoose.connection;
@@ -21,11 +21,11 @@ db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
-const eventOne = new Event({
+const eventOne = new event({
     title: "Whatever",
-    date: "12.10.2022",
-    onlineVotes: 22,
-    presenceVotes: 1
+    description: "Vote for something",
+    date: Date.now(),
+    participants: 1
 })
 
 eventOne.save((error, savedDoc) => {
@@ -58,9 +58,7 @@ app.get("/", (req, res) => {
     res.render("index");
 }); 
 
-app.get("/events/:id", eventController.showEventPage)
-
-app.post("/events/:id", eventController.postVote)
+app.post("/events/:id", singleEventController.postVote)
 
 app.get("/events", eventsController.showEvents)
 
@@ -79,6 +77,9 @@ app.get("/profile/:userId", homeController.sendProfileId);
 
 // Post userId
 app.post("/profile/:userId", homeController.sendProfileId);
+
+app.get("/events/:id", singleEventController.showEventPage)
+
 
 app.use(errorController.respondNoResourceFound)
 app.use(errorController.respondInternalError)
