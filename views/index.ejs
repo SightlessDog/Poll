@@ -1,2 +1,15 @@
 <link rel="stylesheet" href="css/app.css">
-<h1>Hello, this is the home page here we would ask all the possible ids and show them here</h1>
+<h1>Hello, this is the home page here we would ask all the possible ids and show them here!</h1>
+
+<h1>Create a new event</h1>
+<form id ="eventCreation" action="/" method="POST">
+    <label for="eventTitle">Event title:</label><br>
+    <input type="text" name="title" placeholder="title"required>
+    <label for="eventDate">Date:</label><br>
+    <input type="date" name="date" placeholder="date"required>
+    <label for="eventOption">Option One:</label><br>
+    <input type="text" name="optionOne" placeholder="option one"required>
+    <label for="eventOption">Option Two:</label><br>
+    <input type="text" name="optionTwo" placeholder="option two"required>
+    <button class="btn btn-primary">Submit</button>
+</form>

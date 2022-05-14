@@ -62,6 +62,9 @@ app.get("/events/:id", eventController.showEventPage)
 
 app.post("/events/:id", eventController.postVote)
 
+//create a new event
+app.post("/event/:id", eventController.createEvent)
+
 app.get("/events", eventsController.showEvents)
 
 app.get("/signup", signUpController.showSignUp);

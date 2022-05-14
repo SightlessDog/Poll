@@ -14,3 +14,18 @@ exports.postVote = (req, res) => {
 
     res.render("Profile/profile")
 }
+
+//used for the creation of the event
+exports.createEvent = (req, res) => {
+    const createdEvent = new Event({
+        title: req.params.title,
+        date: req.params.date,
+        optionOne: req.params.optionOne,
+        optionTwo: req.params.optionTwo
+    })
+    
+    createdEvent.save((error, savedDoc) => {
+        if (error) console.log(error);
+    })
+
+}
