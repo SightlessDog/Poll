@@ -6,8 +6,10 @@
 <% events.forEach(event => { %>
 <a href="/events/<%= event._id %>"  id="event">
  <h5> <%= event.title %> </h5>
- <span>Event Description: </span><span> <%= event.Description %> </span><br/>
- <span>event date: </span><span><%= event.date %> </span><br/>
+ <span>Event Description: </span><span> <%= event.description %> </span><br/>
+ <span>Event date: </span><span><%= event.date %> </span><br/>
+ <span>Option 1: </span><span> <%= event.optionOne %> </span><br/>
+ <span>Option 2: </span><span> <%= event.optionTwo %> </span><br/>
  <span>Participants: </span><span> <%= event.participants %> </span><br/>
 </a>
 <% }); %>

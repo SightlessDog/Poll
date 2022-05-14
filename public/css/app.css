@@ -77,3 +77,11 @@
   height: 100vh;
   font-family: 'Exo 2', sans-serif;
 }
+
+input[type="submit"] {
+  transform: translate(2.2%);
+  padding: 3px;
+  margin-top: 0.6rem;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: bold;
+ }
