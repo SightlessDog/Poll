@@ -6,9 +6,9 @@
 <% events.forEach(event => { %>
 <a href="/events/<%= event._id %>"  id="event">
  <h5> <%= event.title %> </h5>
+ <span>Event Description: </span><span> <%= event.Description %> </span><br/>
  <span>event date: </span><span><%= event.date %> </span><br/>
- <span>Online Votes: </span><span> <%= event.onlineVotes %> </span><br/>
- <span>Presence Votes: </span><span> <%= event.presenceVotes %> </span><br/>
+ <span>Participants: </span><span> <%= event.participants %> </span><br/>
 </a>
 <% }); %>
 </a>

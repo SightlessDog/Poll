@@ -1,31 +1,58 @@
 const homeController = require("./controllers/homeController");
 const eventsController = require("./controllers/eventsController");
-const eventController = require("./controllers/eventController");
+const singleEventController = require("./controllers/singleEventController");
 const votedEventsController = require("./controllers/votedEventsController");
-const thanksController = require("./controllers/thanksController");
-const signUpController = require("./controllers/signUpController");
+const userController = require("./controllers/userController");
 const errorController = require("./controllers/errorController")
 const express = require('express');
 const layouts = require("express-ejs-layouts")
 const app = express();
 const mongoose = require("mongoose");
-const Event = require("./models/event");
+const event = require("./models/event");
+const router = require("./routes/index");
+const passport = require("passport");
+const User = require("./models/user"); //needed functionality for passport to work
+const expressSession = require("express-session");
 
+app.use(
+    expressSession({
+        secret: "secretContract",
+        cookie: {
+            maxAge: 4000000
+        },
+        resave: false,
+        saveUninitialized: false
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+    res.locals.loggedIn = req.isAuthenticated();
+    res.locals.currentUser = req.user;
+    next();
+});
+
+let dburl = "mongodb://127.0.0.1:27017/mongodb-poll"
 mongoose.connect(
- "mongodb://localhost:27017/mongodb-poll",
- );
- {useNewUrlParser: true}
+    dburl,
+    {useNewUrlParser: true}
+);
 const db = mongoose.connection;
 
 db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
-const eventOne = new Event({
+const eventOne = new event({
     title: "Whatever",
-    date: "12.10.2022",
-    onlineVotes: 22,
-    presenceVotes: 1
+    description: "Vote for something",
+    date: Date.now(),
+    participants: 1
 })
 
 eventOne.save((error, savedDoc) => {
@@ -58,20 +85,21 @@ app.get("/", (req, res) => {
     res.render("index");
 }); 
 
-app.get("/events/:id", eventController.showEventPage)
-
-app.post("/events/:id", eventController.postVote)
+app.post("/events/:id", singleEventController.postVote)
 
 //create a new event
 app.post("/event/:id", eventController.createEvent)
 
 app.get("/events", eventsController.showEvents)
 
-app.get("/signup", signUpController.showSignUp);
+
+app.get("/Register", userController.showRegister);
+app.get("/Profile", userController.showProfile);
+
 
 app.get("/votedEvents", votedEventsController.showVotedEvents)
 
-app.post("/signup", thanksController.showThanks)
+//app.post("/signup", thanksController.showThanks)
 // Post a new event
 // We will use the same controller for the moment, but later when we have logic this will change 
 // TODO I am not sure about this, usually you do a post request and then you get the id back but we'll see :)
@@ -83,6 +111,9 @@ app.get("/profile/:userId", homeController.sendProfileId);
 // Post userId
 app.post("/profile/:userId", homeController.sendProfileId);
 
+app.get("/events/:id", singleEventController.showEventPage)
+
+app.use("/", router);
 app.use(errorController.respondNoResourceFound)
 app.use(errorController.respondInternalError)
 
