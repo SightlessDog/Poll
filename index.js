@@ -48,19 +48,6 @@ db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
-//example event creation
-/* const exampleEvent = new event({
-    title: "TestEvent2146",
-    description: "Vote for something",
-    date: Date.now(),
-    options: ["a", "b"],
-    participants: 23
-})
-
-exampleEvent.save((error, savedDoc) => {
-    if (error) console.log(error);
-}) */
-
 app.set("view engine", "ejs")
 
 app.set("port", process.env.PORT || 3000);
