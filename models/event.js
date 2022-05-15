@@ -4,9 +4,9 @@ const eventSchema = mongoose.Schema({
     title: String,
     description: String,
     date: Date,    
-    options: [String],
+    options: String,
     participants: Number
-    //Add options here
+    //Add options as options: [Number, String]
 });
 
 module.exports = mongoose.model("Event", eventSchema);
