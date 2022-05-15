@@ -21,10 +21,10 @@ exports.createEvent = (req, res, next) => {
         title: req.body.title,
         description: req.body.description,
         date: req.body.date,
-        options : req.body.options,
+        optionOne : req.body.optionOne,
+        optionTwo : req.body.optionTwo,
         participants: req.body.participants
     })
-    console.log('created Event');
     createdEvent.save((error, savedDoc) => {
         if (error) console.log(error);
     })
