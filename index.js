@@ -89,6 +89,8 @@ app.get("/", (req, res) => {
 
 app.post("/events/:id", singleEventController.postVote)
 
+app.post("/events", singleEventController.createEvent)
+
 app.get("/events", eventsController.showEvents)
 
 
