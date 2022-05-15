@@ -48,6 +48,19 @@ db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
+
+const eventOne = new event({
+    title: "Whatever",
+    description: "Vote for something",
+    date: Date.now(),
+    participants: 1,
+    options: ["Yes", "No", "What is this?", "Why not?"]
+})
+
+eventOne.save((error, savedDoc) => {
+    if (error) console.log(error);
+})
+
 app.set("view engine", "ejs")
 
 app.set("port", process.env.PORT || 3000);
