@@ -1,44 +1,36 @@
 <link rel="stylesheet" href="css/app.css">
 
 
-<div id="eventCreation">
-    <form id ="eventForm" action="/events" method="POST">
-        <fieldset>
-            <legend>Create a new event</legend>        
-            <div>
-                <label for="eventTitle">Event title:</label><br>
-                <input type="text" name="title" placeholder="title"required>
-            </div>
-            <br/>
-            <div>
-                <label for="eventDescription">Description:</label><br>
-                <input type="text" name="description" placeholder="description"required>
-            </div>
-            <br/>
-            <div>
-                <label for="eventDate">Date:</label><br>
-                <input type="date" name="date" placeholder="date"required>
-            </div>
-            <br/>
-            <div>
-                <label for="eventOptionOne">Option 01:</label><br>
-                <input type="text" name="optionOne" placeholder="option 01"required>
-            </div>
-            <br/>       
-            <div>
-                <label for="eventOptionTwo">Option 02:</label><br>
-                <input type="text" name="optionTwo" placeholder="option 02"required>
-            </div>
-            <br/>   
-            <div>
-                <label for="eventPartipcipants">Participants:</label><br>
-                <input type="number" name="participants" placeholder="participants"required>
-            </div>
-            <br/>
-            <input type="submit" value="Submit" class ="submit-button"/>
-        </fieldset>
-    </form>
-</div>
+<form class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-full mt-4" id="eventForm" action="/events" method="POST"> 
+    <div class="relative z-0 w-full mb-6 group">
+    <input type="text" name="title" required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+    <label for="title" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Title</label>
+    </div>
+    <div class="relative z-0 w-full mb-6 group">
+    <input type="text" name="description" required id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+    <label for="description" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
+    </div>
+    <div class="relative z-0 w-full mb-6 group">
+    <input type="date" name="date" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+    <label for="date" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date</label>
+    </div>
+    <div class="grid xl:grid-cols-2 xl:gap-6">
+    <div class="relative z-0 w-full mb-6 group">
+    <input type="text" name="optionOne" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+    <label for="optionOne" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Option</label>
+    </div>
+    <div class="relative z-0 w-full mb-6 group">
+    <input type="text" name="optionTwo" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+    <label for="optionTwo" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Second Option</label>
+    </div>
+    </div>
+    <div class="relative z-0 w-full mb-6 group">
+    <input type="number" name="participants" required id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholer="" required>
+    <label for="participants" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Participants</label>
+    </div>
+    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+</form>
+    
 
 <div id="events">
 <h1 id="title">Events</h1>
