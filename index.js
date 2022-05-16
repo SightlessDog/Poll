@@ -48,16 +48,18 @@ db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
-const eventOne = new event({
-    title: "Whatever",
+//example event creation
+/* const exampleEvent = new event({
+    title: "TestEvent2146",
     description: "Vote for something",
     date: Date.now(),
-    participants: 1
+    options: ["a", "b"],
+    participants: 23
 })
 
-eventOne.save((error, savedDoc) => {
+exampleEvent.save((error, savedDoc) => {
     if (error) console.log(error);
-})
+}) */
 
 app.set("view engine", "ejs")
 
@@ -86,6 +88,8 @@ app.get("/", (req, res) => {
 }); 
 
 app.post("/events/:id", singleEventController.postVote)
+
+app.post("/events", singleEventController.createEvent)
 
 app.get("/events", eventsController.showEvents)
 

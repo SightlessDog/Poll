@@ -14,6 +14,7 @@
   html,
   body {
     height: 100%;
+
   }
 
 #title {
@@ -67,3 +68,20 @@
   font-family: 'Exo 2', sans-serif;
   padding: 1em;
 }
+
+#eventForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  height: 50vh;
+  font-family: 'Exo 2', sans-serif;
+}
+
+input[type="submit"] {
+  transform: translate(2.2%);
+  padding: 3px;
+  margin-top: 0.6rem;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: bold;
+ }
