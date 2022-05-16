@@ -5,7 +5,7 @@ const votedEventsController = require("./controllers/votedEventsController");
 const userController = require("./controllers/userController");
 const errorController = require("./controllers/errorController")
 const express = require('express');
-const layouts = require("express-ejs-layouts")
+const layouts = require("express-ejs-layouts") //require ejs layout rendering
 const app = express();
 const mongoose = require("mongoose");
 const event = require("./models/event");
@@ -48,6 +48,18 @@ db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
+const eventOne = new event({
+    title: "Whatever",
+    description: "Vote for something",
+    date: Date.now(),
+    participants: 1,
+    options: ["Yes", "No", "What is this?", "Why not?"]
+})
+
+eventOne.save((error, savedDoc) => {
+    if (error) console.log(error);
+})
+
 app.set("view engine", "ejs")
 
 app.set("port", process.env.PORT || 3000);
@@ -80,6 +92,11 @@ app.post("/events", singleEventController.createEvent)
 
 app.get("/events", eventsController.showEvents)
 
+app.get("/events", eventsController.showEvents, 
+    (req, res, next) => {
+        //console.log(req.data);
+        res.render("Events/events", {events: req.data});
+});
 
 app.get("/Register", userController.showRegister);
 app.get("/Profile", userController.showProfile);

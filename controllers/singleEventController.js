@@ -9,6 +9,16 @@ exports.showEventPage = (req, res) => {
     })
 };
 
+exports.addVoteOption = (req, res) => {
+    let id = req.params.id;
+    let type = req.params.type;
+
+    Event.findById(id, (req, res) => {
+        //add one option?
+    })
+    
+};
+
 exports.postVote = (req, res) => {
     Event.findOneAndUpdate
 
