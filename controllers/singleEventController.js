@@ -3,7 +3,7 @@ const { body, validationResult } = require('express-validator');
 
 exports.showEventPage = (req, res) => {
     let id = req.params.id;
-    let event;
+    //let event;
     Event.findById(id, (err, data) => {
         res.render("SingleEvent/singleEvent", {event : data});
     })
