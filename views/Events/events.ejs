@@ -1,6 +1,4 @@
 <link rel="stylesheet" href="css/app.css">
-
-
 <form class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-full mt-4" id="eventForm" action="/event" method="POST"> 
     <div class="relative z-0 w-full mb-6 group">
     <input type="text" name="title" required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
@@ -37,7 +35,7 @@
 
 <div id="events-container">
 <% events.forEach(event => { %>
-<a href="/events/<%= event._id %>"  id="event">
+<a href="/event/<%= event._id %>"  id="event">
  <h5> <%= event.title %> </h5>
  <span>Event Description: </span><span> <%= event.description %> </span><br/>
  <span>Event Date: </span><span><%= event.date %> </span><br/>
