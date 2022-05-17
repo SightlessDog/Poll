@@ -9,14 +9,14 @@
             <input type="submit" value="submit">
         </form>
 
-        <form class="vote-submit" action"/" method="post">
+        <form class="vote-submit" action="/" method="post">
             <label>Pick your vote:</label>
             
             <% for (var i = 0; i < event.options.length; i++) { %>
                 <input type="radio" name="radiovote"  value=<%= event.options[i] %> 
                 <label for="event.options[i]"> <%= event.options[i] %> </label>
             <% } %>
-
             <input type="submit" value="submit">
+        </form>        
     </div>
 </body>
