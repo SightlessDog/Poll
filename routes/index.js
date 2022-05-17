@@ -1,10 +1,18 @@
 "use strict";
 
 const router = require("express").Router(),
-    userRoutes = require("./userRoutes"),
-    createEventRoutes = require("./createEventRoutes");
+    userRoutes = require("./user"),
+    eventRoutes = require("./event"),
+    eventsRoutes = require("./events"),
+    votedEventsRoutes = require("./votedEvents")
+
 
 router.use("/Register", userRoutes);
-router.use("/Events", createEventRoutes);
+router.use("/event", eventRoutes);
+router.use("/events", eventsRoutes);
+router.use("/votedEvents", votedEventsRoutes);
+router.use("/", (req, res) => {
+    res.render("index")
+})
 
 module.exports = router;

@@ -1,8 +1,3 @@
-const homeController = require("./controllers/homeController");
-const eventsController = require("./controllers/eventsController");
-const singleEventController = require("./controllers/singleEventController");
-const votedEventsController = require("./controllers/votedEventsController");
-const userController = require("./controllers/userController");
 const errorController = require("./controllers/errorController")
 const express = require('express');
 const layouts = require("express-ejs-layouts") //require ejs layout rendering
@@ -56,12 +51,6 @@ app.use(layouts)
 
 app.use(express.static(__dirname + '/public'));
 
-// This is a custom middleware
-app.use("/", (req, res, next) => {
-    console.log(req.params);
-    next();
-})
-
 app.use(
     express.urlencoded({
         extended: false
@@ -69,42 +58,6 @@ app.use(
 );
 app.use(express.json());
 
-// Built in function comes from express package
-app.get("/", (req, res) => {
-    res.render("index");
-}); 
-
-app.post("/events/:id", singleEventController.postVote)
-
-app.post("/events", singleEventController.createEvent)
-
-app.get("/events", eventsController.showEvents)
-
-app.get("/events", eventsController.showEvents, 
-    (req, res, next) => {
-        //console.log(req.data);
-        res.render("Events/events", {events: req.data});
-});
-
-app.get("/Register", userController.showRegister);
-app.get("/Profile", userController.showProfile);
-
-
-app.get("/votedEvents", votedEventsController.showVotedEvents)
-
-//app.post("/signup", thanksController.showThanks)
-// Post a new event
-// We will use the same controller for the moment, but later when we have logic this will change 
-// TODO I am not sure about this, usually you do a post request and then you get the id back but we'll see :)
-app.post("/id/:id", homeController.sendEventId)
-
-//Get profile by userId
-app.get("/profile/:userId", homeController.sendProfileId);
-
-// Post userId
-app.post("/profile/:userId", homeController.sendProfileId);
-
-app.get("/events/:id", singleEventController.showEventPage)
 
 app.use("/", router);
 app.use(errorController.respondNoResourceFound)

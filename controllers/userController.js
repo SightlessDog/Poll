@@ -4,17 +4,11 @@ const { body, validationResult } = require('express-validator');
 
 const getUserInfo = body => {
         return {
-            // roles: body.role,
-            // name: {
-            //     first: body.first,
-            //     last: body.last
-            // },
             email: body.email,
             password: body.password
         };
     };
 module.exports = {
-
     index: (req, res) => {
         res.render("Profile/index");
     },
@@ -54,27 +48,9 @@ module.exports = {
                 }
             });
         },
-
-        createUser2: async (req, res, next) => {
-            let user = await User.findOne({ email: req.body.email });
-            if (user) {
-                return res.status(400).send('That user already exisits!');
-            } else {
-                user = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    password: req.body.password,
-                });
-                await user.save();
-                res.send(user);
-                console.log('successful lol');
-            }
-        },
-
     showProfile: (req, res) => {
         res.render("Profile/index");
     },
-
     showRegister: (req, res) => {
         res.render("register/index");
     }
