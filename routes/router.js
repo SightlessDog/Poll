@@ -7,7 +7,7 @@ const router = require("express").Router(),
     votedEventsRoutes = require("./votedEvents")
 
 
-router.use("/Register", userRoutes);
+router.use("/register", userRoutes);
 router.use("/event", eventRoutes);
 router.use("/events", eventsRoutes);
 router.use("/votedEvents", votedEventsRoutes);

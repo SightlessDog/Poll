@@ -10,7 +10,7 @@ const getUserInfo = body => {
     };
 module.exports = {
     index: (req, res) => {
-        res.render("Profile/index");
+        res.render("register/index");
     },
     redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
