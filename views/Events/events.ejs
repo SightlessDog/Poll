@@ -1,5 +1,8 @@
 <link rel="stylesheet" href="css/app.css">
-<form class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-full mt-4" id="eventForm" action="/event" method="POST"> 
+
+<div class="mt-4 mx-auto px-2">
+<div class="max-w-2xl">Create an event: </div>
+<form class="max-w-2xl mt-4" id="eventForm" action="/event" method="POST"> 
     <div class="relative z-0 w-full mb-6 group">
     <input type="text" name="title" required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
     <label for="title" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Title</label>
@@ -28,21 +31,23 @@
     </div>
     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
 </form>
-    
-
-<div id="events">
+</div>
 <h1 id="title">Events</h1>
-
 <div id="events-container">
 <% events.forEach(event => { %>
-<a href="/event/<%= event._id %>"  id="event">
- <h5> <%= event.title %> </h5>
- <span>Event Description: </span><span> <%= event.description %> </span><br/>
- <span>Event Date: </span><span><%= event.date %> </span><br/>
- <span>Options: </span><span><%= event.options %> </span><br/>
- <span>Participants: </span><span> <%= event.participants %> </span><br/>
-</a>
+    <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= event.date %> </span> 
+          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= event.participants %></a>
+        </div> 
+        <div class="mt-2">
+          <a href="/event/<%= event._id %>" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= event.title %></a> 
+          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= event.description %></p>
+        </div> 
+        <div class="flex items-center justify-between mt-4">
+          <a href="/event/<%= event._id %>" class="text-blue-600 dark:text-blue-400 hover:underline">Vote ⟶</a> 
+        </div>
+    </div>
 <% }); %>
-</a>
 </div>
 
