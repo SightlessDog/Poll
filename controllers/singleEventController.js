@@ -48,3 +48,18 @@ exports.createEvent = (req, res, next) => {
         if (error) console.log(error);
     })
 }
+
+//Add additional option to vote
+exports.addAdditionalOption = (req, res, next) => {
+    let id = req.params.id;
+    let additionalOption = {name: req.body.additionalOption, votes: 0};
+    Event.updateOne(
+        {_id: id},
+        {$push: {options: additionalOption}},
+        function (error, success){
+            res.render("Thanks/thanks");
+            //res.render("SingleEvent/singleEvent", {event : success});
+            if(error) console.log(error)
+        }
+    );
+}

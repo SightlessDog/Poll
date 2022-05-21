@@ -2,17 +2,21 @@
     <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px; margin-top: 50px; margin-bottom: 50px;">
         <div class="mt-2">
           <a href="/event/<%= event._id %>" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= event.title %></a> 
-          <form action="/event/vote/<%= event._id %>" method="post" class="mt-2 text-gray-600 dark:text-gray-300">
-            <label for="suggestText">Name your vote</label>
-            <div><b>If you want to add an answer, please submit here:</b></div>
-            <input type="text" id="suggestText" placeholder="Describe your vote">
-            <div>Pick your vote:</div>
+          <form action="/event/vote/<%= event._id %>" method="post" class="mt-2 text-gray-600 dark:text-gray-300">            
+            <div><b>Cast your vote:</b></div>
             <% for (var i = 0; i < event.options.length; i++) { %>
                 <input type="radio" name="option"  value="<%= event.options[i].name %>">
                 <label for="event.options[i]" class="text-blue-600 dark:text-blue-400 hover:underline"><%= event.options[i].name %></label>
-            <% } %> 
             </br>
-            <input type="submit" value="submit">
+            <% } %> 
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Vote</button>
+            </br>
+            </form>
+           <form action="/event/addOption/<%= event._id %>" method="POST">
+            <label for="addOption" data-toggle="tooltip" data-placement="left" title="If you want to add an additional option, please submit here"><b>Add own option:</b></label>            
+            </br>
+            <input type="text" name="additionalOption" id="addOption" placeholder="Enter your option here">
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add option</button>
         </form>
         </div> 
     </div>

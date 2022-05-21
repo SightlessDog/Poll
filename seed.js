@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { options } = require("./routes/event");
 Event = require("./models/event");
 
 let dburl = "mongodb://127.0.0.1:27017/mongodb-poll"
