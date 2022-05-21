@@ -24,7 +24,11 @@ const userSchema = new Schema({
     password:{
         type: String,
         required: true
-    }
+    }, 
+    events: [{
+        type: Schema.Types.ObjectId,
+        ref: "Event"
+    }]   
 });
 
 userSchema.virtual("fullName").get(function() {
