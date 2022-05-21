@@ -41,6 +41,7 @@ exports.createEvent = (req, res, next) => {
         description: req.body.description,
         date: req.body.date,
         options : [{name: req.body.options[0], votes: 0},{name: req.body.options[1], votes: 0}],
+        participants : []
     })
     createdEvent.save((error, savedDoc) => {
         res.render("SingleEvent/singleEvent", {event : savedDoc});

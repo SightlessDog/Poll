@@ -13,7 +13,6 @@ const eventSchema = mongoose.Schema({
         type: Date, 
         required: true,
     },    
-    //participants: Number,
     options: {
         type: [{name: String, votes: Number}],
         required: true,
@@ -21,7 +20,7 @@ const eventSchema = mongoose.Schema({
     participants: [{
         type: Schema.Types.ObjectId,
         ref: "User"
-    }],
+    }]
 });
 
 module.exports = mongoose.model("Event", eventSchema);

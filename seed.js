@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { options } = require("./routes");
+const { options } = require("./routes/event");
 Event = require("./models/event");
 
 let dburl = "mongodb://127.0.0.1:27017/mongodb-poll"
@@ -15,22 +15,34 @@ var votingEvents = [
         title: "Whatever",
         description: "Vote for something",
         date: Date.now(),
-        participants: 1,
-        options: ["Yes", "No"]
+        participants: [],
+        options: [
+            {name: "Yes", votes: 0}, 
+            {name: "No", votes: 0}
+        ]
     },
     {
         title: "Cinema",
         description: "What movie do you want to see?",
         date: Date.now(),
-        participants: 0,
-        options: ["Batman", "Spiderman", "Watchmen"]
+        participants: [],
+        options: [
+            {name: "Batman", votes: 0}, 
+            {name: "Spiderman", votes: 0}, 
+            {name: "Watchmen", votes: 0}
+        ]
     },
     {
         title: "Fruits",
         description: "Best fruit in the world",
         date: Date.now(),
-        participants: 4,
-        options: ["Yes", "Apple", "Tomato", "Strawberry"]
+        participants: [],
+        options: [
+            {name: "Yes"}, 
+            {name: "Apple", votes: 0}, 
+            {name: "Tomato", votes: 0}, 
+            {name: "Strawberry", votes: 0}
+        ]
     }
 ];
 
@@ -44,7 +56,8 @@ votingEvents.forEach((e) => {
         title: e.title,
         description: e.description,
         date: e.date,
-        options: e.options
+        options: e.options,
+        participants: e.participants
     }));
 });
 
