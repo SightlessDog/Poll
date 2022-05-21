@@ -4,6 +4,7 @@ const router = require("express").Router(),
     singleEventController = require("../controllers/singleEventController");
 
 // TODO we have to find a better route
+router.post("/addOption/:id", singleEventController.addAdditionalOption);
 
 router.post("/vote/:id", singleEventController.postVote)
 
