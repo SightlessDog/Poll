@@ -53,6 +53,14 @@ module.exports = {
     },
     showRegister: (req, res) => {
         res.render("register/index");
+    },
+    showSignInPage : (req, res) => {
+        res.render("register/signIn");
+    },
+    showResetPassword : (req, res) => {
+        res.render("register/resetPassword");
+    },
+    showForgotPassword : (req, res) => {
+        res.render("register/forgotPassword");
     }
-
 }
