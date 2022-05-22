@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
-Event = require("./models/event");
+Events = require("./models/event");
+Users = require("./models/user");
+
 
 let dburl = "mongodb://127.0.0.1:27017/mongodb-poll"
 mongoose.connect(
     dburl,
     {useNewUrlParser: true}
 );
-
 mongoose.connection;
 
 var votingEvents = [
@@ -37,7 +38,7 @@ var votingEvents = [
         date: Date.now(),
         participants: [],
         options: [
-            {name: "Yes"}, 
+            {name: "Yes", votes: 0}, 
             {name: "Apple", votes: 0}, 
             {name: "Tomato", votes: 0}, 
             {name: "Strawberry", votes: 0}
@@ -45,18 +46,57 @@ var votingEvents = [
     }
 ];
 
-Event.deleteMany().exec()
+var users = [
+    {
+        email: "sightlessdog@poller.com",
+        password: "pass123456",
+        events: []
+    },
+    {
+        email: "mrschmoke@poller.com",
+        password: "pass123456",
+        events: []
+    },
+    {
+        email: "mymayu1@poller.com",
+        password: "pass123456",
+        events: []
+    },
+    {
+        email: "karmagedon@poller.com",
+        password: "pass123456",
+        events: []
+    },
+    {
+        email: "shirokonto@poller.com",
+        password: "pass123456",
+        events: []
+    }
+];
+
+Events.deleteMany().exec()
     .then(() => console.log("Events data is empty!"));
+
+Users.deleteMany().exec()
+    .then(() => console.log("Users data is empty!"));
 
 var commands = [];
 
 votingEvents.forEach((e) => {
-    commands.push(Event.create({
+    commands.push(Events.create({
         title: e.title,
         description: e.description,
         date: e.date,
         options: e.options,
         participants: e.participants
+    }));
+})
+
+users.forEach((u) => {
+    commands.push(Users.create({
+        email: u.email,
+        password: u.password,
+        events: u.events
     }));
 });
 

@@ -15,8 +15,14 @@ Event.create({
     title: "REPLVote",
     description: "Does it help to learn this lesson?",
     date: Date.now(),
-    participants: 0,
-    options: ["Why yes!", "How about no?"]
+    participants: [],
+    options: [{
+        name: "Why yes!",
+        votes: 5
+    }, {
+        name: "How about no?",
+        votes: 2
+    }]
 }).then(event => {
     testEvent = event;
     return Event.findOne({
@@ -27,7 +33,7 @@ Event.create({
 })
 .catch(error => console.log(error.message));    
 
-
+//ENTER: 'node' then '.load repl.js'in console!
 
 //console.log(testEvent.title);
 
