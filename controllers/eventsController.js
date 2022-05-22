@@ -16,6 +16,6 @@ exports.showEvents = (req, res) => {
             return [];
         })                          //catch rejected errors that are rejected in promise
         .then(() => {
-            console.log("promise complete");
+            console.log("Events: Promise complete");
         });
 };
