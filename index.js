@@ -7,6 +7,7 @@ const event = require("./models/event");
 const router = require("./routes/router");
 const passport = require("passport");
 const User = require("./models/user"); //needed functionality for passport to work
+const SecondUser = require("./models/second-user");
 const expressSession = require("express-session");
 app.use(
     expressSession({
@@ -38,6 +39,20 @@ const db = mongoose.connection;
 db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
+
+User.create({
+    name: {
+    first: "Jon",
+    last: "Wexler "
+    },
+    email: "jon@jonwexler.com",
+    password: "pass123"
+})
+.then(user => {
+    console.log("User created")
+})
+.catch(error => console.log(error.message));
+
 app.set("view engine", "ejs")
 app.set("port", process.env.PORT || 3000);
 app.use(layouts)
