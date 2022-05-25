@@ -49,28 +49,23 @@ var votingEvents = [
 var users = [
     {
         email: "sightlessdog@poller.com",
-        password: "pass123456",
-        events: []
+        password: "pass123456"
     },
     {
         email: "mrschmoke@poller.com",
-        password: "pass123456",
-        events: []
+        password: "pass123456"
     },
     {
         email: "mymayu1@poller.com",
-        password: "pass123456",
-        events: []
+        password: "pass123456"
     },
     {
         email: "karmagedon@poller.com",
-        password: "pass123456",
-        events: []
+        password: "pass123456"
     },
     {
         email: "shirokonto@poller.com",
-        password: "pass123456",
-        events: []
+        password: "pass123456"
     }
 ];
 
