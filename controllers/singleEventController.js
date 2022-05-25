@@ -36,11 +36,15 @@ exports.postVote = (req, res) => {
 
 //used for the creation of the event
 exports.createEvent = (req, res, next) => {
+    const optionsPair = [];
+    req.body.options.forEach(option => {
+        optionsPair.push({name: option, votes: 0});
+    });  
     const createdEvent = new Event({
         title: req.body.title,
         description: req.body.description,
         date: req.body.date,
-        options : [{name: req.body.options[0], votes: 0},{name: req.body.options[1], votes: 0}],
+        options : optionsPair,
         participants : []
     })
     createdEvent.save((error, savedDoc) => {
