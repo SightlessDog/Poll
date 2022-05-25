@@ -26,15 +26,16 @@
       </div>
     </div>
     <div class="grid xl:grid-cols-2 xl:gap-6">
-      <input type="button" value="Add option" onclick="addField()" name="additionalOption" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
-      <input type="button" value="Remove option" name="removeLastOption" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
+      <input type="button" value="Add option" onclick="addOptionField()" name="additionalOption" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
+      <input type="button" value="Remove option" onclick="removeLastOptionField()" name="removeLastOption" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
     </div>
     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
   </form>
 </div>
 
 <script type="text/javascript">
-  function addField() {
+  const addedOptions = [];
+  function addOptionField() {
     const newDiv=document.createElement("div");
     newDiv.className="relative z-0 w-full mb-6 group";  
     // new <input type="text"
@@ -53,6 +54,11 @@
     newDiv.appendChild(newLabel);
     //Append to body
     document.getElementById("multipleOptions").appendChild(newDiv);
+    addedOptions.push(newDiv);
+  }
+
+  function removeLastOptionField() {
+    if(document.getElementById("multipleOptions").childElementCount>2) document.getElementById("multipleOptions").removeChild(document.getElementById("multipleOptions").lastChild);    
   }
 </script>
 
