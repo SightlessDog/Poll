@@ -1,5 +1,6 @@
 const mongoose = require("mongoose"),
-      Event = require("./models/event");
+      Event = require("./models/event"),
+      User = require("./models/user");
 const { showVotedEvents } = require("./controllers/votedEventsController");
 
 
@@ -16,10 +17,12 @@ Event.create({
     description: "Does it help to learn this lesson?",
     date: Date.now(),
     participants: [],
-    options: [{
+    options: 
+    [{
         name: "Why yes!",
         votes: 5
-    }, {
+    }, 
+    {
         name: "How about no?",
         votes: 2
     }]
@@ -28,10 +31,24 @@ Event.create({
     return Event.findOne({
         title: event.title
     });
-}).then(event => {  testEvent = event
-                        testEvent.save().then(event => console.log("event updated"));
-})
+}).then(event => {  
+        testEvent = event;
+        testEvent.save().then(event => console.log("event updated"));
+    })
 .catch(error => console.log(error.message));    
+
+var testUser;
+
+User.create({
+    name: {
+        first: "Peter",
+        last: "Parker"
+    },
+    email: "peter@spiderman.com",
+    password: "spiderpig"
+})
+.then(user => testUser = user)
+.catch(error => console.log(error.message));
 
 //ENTER: 'node' then '.load repl.js'in console!
 
