@@ -31,23 +31,29 @@ module.exports = {
         }
     },
     createUser: async (req, res, next) => {
-            if (req.skip) return next();
-            //get user credentials, store them in "newUser"
-            let newUser = new User(getUserInfo(req.body));
-
-            //register the user and save in the database or throw an error if unsuccessful
-            User.register(newUser, req.body.password, (error, user) => {
-                if (user) {
-                    res.locals.redirect = "/";
-                    console.log('Successfully registered!');
-                    next();
-                } else {
-                    res.locals.redirect = "/Register/index";
-                    console.log('Unsuccessful registration!');
-                    next();
-                }
-            });
-        },
+        if (req.skip) return next();
+        //get user credentials, store them in "newUser"
+        let newUser = new User(getUserInfo(req.body));
+        console.log(newUser);
+        //register the user and save in the database or throw an error if unsuccessful
+        User.register(newUser, req.body.password, (error, user) => {
+            if (user) {
+                res.locals.redirect = "/";
+                console.log('Successfully registered!');
+                next();
+            } else {
+                res.locals.redirect = "/Register/index";
+                console.log('Unsuccessful registration!');
+                next();
+            }
+        }) //promises for user needs testing
+        .then(result => { 
+            res.render("thanks, thats the result: " + result); 
+        })
+        .catch(error => {
+            if(error) res.send(error);
+        });
+    },
     showProfile: (req, res) => {
         res.render("Profile/index");
     },
