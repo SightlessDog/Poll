@@ -62,8 +62,8 @@
   }
 </script>
 
-
-<h1 id="title">Events</h1>
+<h1 class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline">Ongoing Events</h1>
+</br>
 <div id="events-container">
 <% events.forEach(event => { %>
     <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
@@ -81,4 +81,24 @@
     </div>
 <% }); %>
 </div>
+</br>
 
+<h1 class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline">Closed Polls</h1>
+</br>
+<div id="events-container">
+  <% events.forEach(event => { %>
+      <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= event.date %> </span> 
+            <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= event.participants.length %></a>
+          </div> 
+          <div class="mt-2">
+            <a href="/event/<%= event._id %>" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= event.title %></a> 
+            <p class="mt-2 text-gray-600 dark:text-gray-300"><%= event.description %></p>
+          </div> 
+          <div class="flex items-center justify-between mt-4">
+            <a href="/event/<%= event._id %>" class="text-blue-600 dark:text-blue-400 hover:underline">See end result ⟶</a> 
+          </div>
+      </div>
+  <% }); %>
+  </div>
