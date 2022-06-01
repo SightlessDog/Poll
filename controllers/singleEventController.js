@@ -26,9 +26,7 @@ exports.postVote = (req, res) => {
         .then(e => Event.find({})
         .exec()
             .then((events) =>{        
-            res.render("Events/events", {  
-            events: events
-            });                   
+                res.render("Thanks/thanks");                   
         }))
     )
     )
