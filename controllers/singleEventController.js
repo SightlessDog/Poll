@@ -14,7 +14,6 @@ exports.postVote = (req, res) => {
     Event.findById(id).exec().then(re => {
         User.findOne({email: "jon@jonwexler.com"}).exec().then(r => {
             re.options.find(el => el.name === req.body.option ? el.votes += 1 : null);
-            console.log("user id ", r)
             if (!re.participants.includes(r._id)) {
                 re.participants.push(r._id);
             }                 
@@ -46,13 +45,13 @@ exports.createEvent = (req, res, next) => {
 exports.addAdditionalOption = (req, res, next) => {
     let id = req.params.id;
     let additionalOption = {name: req.body.additionalOption, votes: 0};
-    Event.updateOne(
-        {_id: id},
-        {$push: {options: additionalOption}},
-        function (error, success){
-            res.render("Thanks/thanks");
-            //res.render("SingleEvent/singleEvent", {event : success});
-            if(error) console.log(error)
+    Event.findById(id).exec().then(re => {
+        if (!re.options.includes(additionalOption)) {
+            re.options.push(additionalOption);
         }
-    );
+        re.save((error, savedDoc) => {
+            res.render("SingleEvent/singleEvent", {event : savedDoc});
+            if (error) console.log(error);
+        })
+    })
 }
