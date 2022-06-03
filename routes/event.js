@@ -10,6 +10,8 @@ router.post("/vote/:id", singleEventController.postVote)
 
 router.post("/", singleEventController.createEvent);
 
+router.post("/closePoll/:id", singleEventController.closePoll);
+
 router.get("/:id", singleEventController.showEventPage);
 
 module.exports = router;

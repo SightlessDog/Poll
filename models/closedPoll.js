@@ -9,10 +9,14 @@ const closedPollSchema = mongoose.Schema({
         unique: true,
     },
     description: String,
-    date: {
+    createdDate: {
         type: Date, 
         required: true,
-    },    
+    },
+    closedDate: {
+        type: Date, 
+        required: true,
+    },  
     endResult: {
         type: {name: String, votes: Number},
         required: true,
@@ -29,9 +33,10 @@ const closedPollSchema = mongoose.Schema({
 
 closedPollSchema.methods.getInfo = function() {
     return `Title: ${this.title} 
-            Description: ${this.description}   
+            Description: ${this.description}  
+            CreatedDate: ${this.createdDate}    
+            ClosedDate: ${this.closedDate}
             EndResult: ${this.endResult}
-            Date:  ${this.date}
             Participants: ${this.participants}
             Options: ${this.options}`;
 };

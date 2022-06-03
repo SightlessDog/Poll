@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 Events = require("./models/event");
 Users = require("./models/user");
+ClosedPolls = require("./models/closedPoll");
 
 
 let dburl = "mongodb://127.0.0.1:27017/mongodb-poll"
@@ -69,10 +70,41 @@ var users = [
     }
 ];
 
+var closedPolls = [
+    {
+        title: "Choose a game",
+        description: "Which game should we play?",
+        createdDate: Date.now(),
+        closedDate: Date.now(),
+        endResult: {name: "Monkey Island", votes: 8},
+        participants: [],
+        options: [
+            {name: "Monkey Island", votes: 8}, 
+            {name: "Hollow Knight", votes: 3}
+        ]
+    },
+    {
+        title: "Volleyball Day",
+        description: "On which day should we play?",
+        createdDate: Date.now(),
+        closedDate: Date.now(),
+        endResult: {name: "Sunday", votes: 4},
+        participants: [],
+        options: [
+            {name: "Friday", votes: 2}, 
+            {name: "Saturday", votes: 3}, 
+            {name: "Sunday", votes: 4}
+        ]
+    }
+];
+
 Events.deleteMany().exec()
     .then(() => console.log("Events data is empty!"));
 
 Users.deleteMany().exec()
+    .then(() => console.log("Users data is empty!"));
+
+ClosedPolls.deleteMany().exec()
     .then(() => console.log("Users data is empty!"));
 
 var commands = [];
@@ -94,6 +126,18 @@ users.forEach((u) => {
         events: u.events
     }));
 });
+
+closedPolls.forEach((c) => {
+    commands.push(ClosedPolls.create({
+        title: c.title,
+        description: c.description,
+        createdDate: c.createdDate,
+        closedDate: c.closedDate,
+        endResult: c.endResult,
+        options: c.options,
+        participants: c.participants
+    }));
+})
 
 Promise.all(commands).then(r => {
     console.log(JSON.stringify(r));

@@ -52,7 +52,7 @@ exports.createEvent = (req, res, next) => {
 }
 
 //Add additional option to vote
-exports.addAdditionalOption = (req, res, next) => {
+exports.addAdditionalOption = (req, res) => {
     let id = req.params.id;
     let additionalOption = {name: req.body.additionalOption, votes: 0};
     Event.updateOne(
@@ -64,4 +64,15 @@ exports.addAdditionalOption = (req, res, next) => {
             if(error) console.log(error)
         }
     );
+}
+
+//close a poll
+exports.closePoll = (req, res) => {
+    //check if the current user is allowed : only creator can close poll
+    //check if there is a highest option
+        //create array with all votes, search for highest number 
+
+        //if not: poll cannot be closed
+        //if yes: a new closedPoll is created and events object is removed from database
+    //res.render(events) with closed Poll section or new single event
 }
