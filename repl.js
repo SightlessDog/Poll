@@ -74,7 +74,7 @@ Event.remove({})
          }); 
      })
      .then(event => {
-         console.log(`Created Event: ${event.getInfo()}`);
+         console.log(`Created Event: ${event.getOngoingPollInfo()}`);
      })
      .then(() => {
          return Event.findOne( {
@@ -83,6 +83,6 @@ Event.remove({})
      })
      .then(event => {
          testEvent = event;
-         console.log(`Found one event: ${event.getInfo()}`);
+         console.log(`Found one event: ${event.getOngoingPollInfo()}`);
      });
       */
