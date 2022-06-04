@@ -9,13 +9,6 @@ exports.showEventPage = (req, res) => {
     })
 };
 
-exports.showClosedPollPage = (req, res) => {
-    let id = req.params.id;
-    Event.findById(id, (err, data) => {
-        res.render("SingleEvent/closedPoll", {event : data});
-    })
-};
-
 exports.postVote = (req, res) => {
     const id = req.params.id;
     Event.findById(id).exec().then(re => {
@@ -70,25 +63,38 @@ exports.closePoll = (req, res) => {
     //TODO: check if the current user is allowed : only creator can close poll
     let id = req.params.id;
     Event.findById(id).exec().then(re => {
-        //check if there is a tie for the highest vote
-        let allVotes = re.options.map((o) => o.votes),
-         highestVote = re.options.reduce((currentOption, highest) => currentOption.votes > highest.votes ? currentOption : highest);
+        //check if there is a tie for the highest vote        
+        let allVotes = re.options.map((o) => o.votes);
+        console.log("allVotes: " + allVotes)
+        let highestVote = getHighestVote(re.options);
+        console.log("getHighestVote: " + highestVote)
         if(findDuplicates(allVotes) == highestVote.votes){
             //if not: poll cannot be closed
             //say that there is a tie
             console.log("There is a tie between options" + highestVote.votes +  " and name: " + highestVote.name)
             res.render("Thanks/thanks");
         } else{
-            //if yes: events.closed is true
-            re.closed = true;
-            console.log("there is a highest vote: " + highestVote.votes +  " and name: " + highestVote.name)
+            re.closed = true;            
             re.save((error, savedDoc) => {
-                res.render("SingleEvent/closedPoll", {event : savedDoc});
+                res.render("SingleEvent/closedPoll", {event : savedDoc, finalResult : highestVote});
                 if (error) console.log(error);
             })
         }
     })
 }
+
+exports.showClosedPollPage = (req, res) => {
+    let id = req.params.id;
+
+    Event.findById(id).exec().then(re => {
+        let allVotes = re.options.map((o) => o.votes);
+        let highestVote = getHighestVote(re.options);
+        res.render("SingleEvent/closedPoll", {event : re, finalResult : highestVote});
+    }).catch((error) => {
+        console.log(error.message);
+        return [];
+    })
+};
 
 exports.openPoll = (req, res) => {
     //TODO: check if the current user is allowed : only creator can open poll
@@ -137,6 +143,10 @@ exports.updateEvent = (req, res, next) => {
             })
         })
     });
+}
+
+function getHighestVote(votes) {
+    return highestVote = votes.reduce((currentOption, highest) => currentOption.votes > highest.votes ? currentOption : highest);
 }
 
 function findDuplicates(votes) {
