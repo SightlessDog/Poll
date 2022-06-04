@@ -12,6 +12,10 @@ router.post("/", singleEventController.createEvent);
 
 router.post("/closePoll/:id", singleEventController.closePoll);
 
+router.get("/:id/edit", singleEventController.showEditPage)
+
 router.get("/:id", singleEventController.showEventPage);
+
+router.post("/:id/update", singleEventController.updateEvent)
 
 module.exports = router;

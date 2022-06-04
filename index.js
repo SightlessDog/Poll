@@ -8,6 +8,10 @@ const router = require("./routes/router");
 const passport = require("passport");
 const User = require("./models/user"); //needed functionality for passport to work
 const expressSession = require("express-session");
+const methodOverride = require("method-override");
+router.use(methodOverride("_method", {
+    methods: ["POST", "GET", "PUT", "DELETE"]
+   }));
 app.use(
     expressSession({
         secret: "secretContract",
@@ -62,6 +66,7 @@ app.use(
     })
 );
 app.use(express.json());
+
 app.use("/", router);
 app.use(errorController.respondNoResourceFound)
 app.use(errorController.respondInternalError)
