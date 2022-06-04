@@ -60,14 +60,54 @@ exports.addAdditionalOption = (req, res) => {
 
 //close a poll
 exports.closePoll = (req, res) => {
-    //check if the current user is allowed : only creator can close poll
-    //check if there is a highest option
-        //create array with all votes, search for highest number 
-
-        //if not: poll cannot be closed
-        //if yes: a new closedPoll is created and events object is removed from database
-    //res.render(events) with closed Poll section or new single event
+    //TODO: check if the current user is allowed : only creator can close poll
+    let id = req.params.id;
+    Event.findById(id).exec().then(re => {
+        //check if there is a tie for the highest vote        
+        let allVotes = re.options.map((o) => o.votes);
+        console.log("allVotes: " + allVotes)
+        let highestVote = getHighestVote(re.options);
+        console.log("getHighestVote: " + highestVote)
+        if(findDuplicates(allVotes) == highestVote.votes){
+            //if not: poll cannot be closed
+            //say that there is a tie
+            console.log("There is a tie between options" + highestVote.votes +  " and name: " + highestVote.name)
+            res.render("Thanks/thanks");
+        } else{
+            re.closed = true;            
+            re.save((error, savedDoc) => {
+                res.render("SingleEvent/closedPoll", {event : savedDoc, finalResult : highestVote});
+                if (error) console.log(error);
+            })
+        }
+    })
 }
+
+exports.showClosedPollPage = (req, res) => {
+    let id = req.params.id;
+
+    Event.findById(id).exec().then(re => {
+        let allVotes = re.options.map((o) => o.votes);
+        let highestVote = getHighestVote(re.options);
+        res.render("SingleEvent/closedPoll", {event : re, finalResult : highestVote});
+    }).catch((error) => {
+        console.log(error.message);
+        return [];
+    })
+};
+
+exports.openPoll = (req, res) => {
+    //TODO: check if the current user is allowed : only creator can open poll
+    let id = req.params.id;
+    Event.findById(id).exec().then(re => {  
+        re.closed = false;
+        re.save((error, savedDoc) => {
+            res.render("SingleEvent/singleEvent", {event : savedDoc});
+                if (error) console.log(error);
+        })
+    })
+}
+
 exports.showEditPage = (req, res) => {
     let id = req.params.id;
     Event.findById(id).exec().then(re => {
@@ -103,4 +143,14 @@ exports.updateEvent = (req, res, next) => {
             })
         })
     });
+}
+
+function getHighestVote(votes) {
+    return highestVote = votes.reduce((currentOption, highest) => currentOption.votes > highest.votes ? currentOption : highest);
+}
+
+function findDuplicates(votes) {
+    let duplicates = votes.filter( (vote, index) => 
+                index !== votes.indexOf(vote));
+        return duplicates;
 }
