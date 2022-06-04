@@ -9,6 +9,13 @@ exports.showEventPage = (req, res) => {
     })
 };
 
+exports.showClosedPollPage = (req, res) => {
+    let id = req.params.id;
+    Event.findById(id, (err, data) => {
+        res.render("SingleEvent/closedPoll", {event : data});
+    })
+};
+
 exports.postVote = (req, res) => {
     const id = req.params.id;
     Event.findById(id).exec().then(re => {
@@ -76,10 +83,22 @@ exports.closePoll = (req, res) => {
             re.closed = true;
             console.log("there is a highest vote: " + highestVote.votes +  " and name: " + highestVote.name)
             re.save((error, savedDoc) => {
-                res.render("SingleEvent/singleEvent", {event : savedDoc});
+                res.render("SingleEvent/closedPoll", {event : savedDoc});
                 if (error) console.log(error);
             })
         }
+    })
+}
+
+exports.openPoll = (req, res) => {
+    //TODO: check if the current user is allowed : only creator can open poll
+    let id = req.params.id;
+    Event.findById(id).exec().then(re => {  
+        re.closed = false;
+        re.save((error, savedDoc) => {
+            res.render("SingleEvent/singleEvent", {event : savedDoc});
+                if (error) console.log(error);
+        })
     })
 }
 
