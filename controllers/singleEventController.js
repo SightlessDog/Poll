@@ -68,3 +68,39 @@ exports.closePoll = (req, res) => {
         //if yes: a new closedPoll is created and events object is removed from database
     //res.render(events) with closed Poll section or new single event
 }
+exports.showEditPage = (req, res) => {
+    let id = req.params.id;
+    Event.findById(id).exec().then(re => {
+        console.log(re)
+        res.render("SingleEvent/editEvent", {event: re, date: re.createdDate.getFullYear() + "-" + (re.createdDate.getMonth() >= 10 ? re.createdDate.getMonth() + 1 : "0"+(re.createdDate.getMonth() + 1))
+         + "-" + (re.createdDate.getDate() >= 10 ? re.createdDate.getDate() : "0" +(re.createdDate.getDate()))})
+    })
+}
+
+exports.updateEvent = (req, res, next) => {
+    let id = req.params.id;
+    let optionsPair = [];
+    Event.findById(id).then(event => {
+        for (let i = 0; i<req.body.options.length; i++ ) {
+            if (req.body.options[i] === event.options[i].name) {
+                optionsPair.push({name: event.options[i].name, votes: event.options[i].votes});
+            } else {
+                optionsPair.push({name: req.body.options[i], votes: 0});
+            }
+        }
+        let eventParams = {
+            title: req.body.title,
+            description: req.body.description,
+            date: req.body.date,
+            options : optionsPair,
+        } 
+        Event.findByIdAndUpdate(id, {
+            $set: eventParams
+        }).then(e => {
+            res.locals.redirect = `/event/${id}`
+            Event.findById(id).then(newEvent => {
+                res.render("SingleEvent/singleEvent", {event: newEvent});
+            })
+        })
+    });
+}
