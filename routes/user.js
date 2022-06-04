@@ -1,11 +1,9 @@
 "use strict";
 
 const router = require("express").Router(),
-    userController = require("../controllers/userController"),
-    secondUserController = require("../controllers/secondUserController");
+    userController = require("../controllers/userController")
 
 router.post("/register", userController.validate, userController.createUser, userController.redirectView);
-router.get("/", secondUserController.index);
 router.get("/register", userController.showRegister);
 router.get("/profile", userController.showProfile);
 router.get("/signIn", userController.showSignInPage);
