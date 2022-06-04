@@ -81,7 +81,8 @@ var closedPolls = [
         participants: [],
         options: [
             {name: "Monkey Island", votes: 8}, 
-            {name: "Hollow Knight", votes: 3}
+            {name: "Hollow Knight", votes: 8},
+            {name: "Hollow Kniffght", votes: 6}
         ],
         closed: true
     },

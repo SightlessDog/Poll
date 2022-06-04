@@ -60,11 +60,31 @@ exports.addAdditionalOption = (req, res) => {
 
 //close a poll
 exports.closePoll = (req, res) => {
-    //check if the current user is allowed : only creator can close poll
-    //check if there is a highest option
-        //create array with all votes, search for highest number 
+    //TODO: check if the current user is allowed : only creator can close poll
+    let id = req.params.id;
+    Event.findById(id).exec().then(re => {
+        //check if there is a tie for the highest vote
+        let allVotes = re.options.map((o) => o.votes),
+         highestVote = re.options.reduce((currentOption, highest) => currentOption.votes > highest.votes ? currentOption : highest);
+        if(findDuplicates(allVotes) == highestVote.votes){
+            //if not: poll cannot be closed
+            //say that there is a tie
+            console.log("There is a tie between options" + highestVote.votes +  " and name: " + highestVote.name)
+            res.render("Thanks/thanks");
+        } else{
+            //if yes: events.closed is true
+            re.closed = true;
+            console.log("there is a highest vote: " + highestVote.votes +  " and name: " + highestVote.name)
+            re.save((error, savedDoc) => {
+                res.render("SingleEvent/singleEvent", {event : savedDoc});
+                if (error) console.log(error);
+            })
+        }
+    })
+}
 
-        //if not: poll cannot be closed
-        //if yes: a new closedPoll is created and events object is removed from database
-    //res.render(events) with closed Poll section or new single event
+function findDuplicates(votes) {
+    let duplicates = votes.filter( (vote, index) => 
+                index !== votes.indexOf(vote));
+        return duplicates;
 }
