@@ -1,7 +1,6 @@
 const mongoose = require("mongoose"),
       Event = require("./models/event"),
       User = require("./models/user");
-const { showVotedEvents } = require("./controllers/votedEventsController");
 
 
 mongoose.connect(
