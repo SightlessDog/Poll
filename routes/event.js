@@ -1,7 +1,12 @@
 "use strict";
 
 const router = require("express").Router(),
-    singleEventController = require("../controllers/singleEventController");
+    singleEventController = require("../controllers/singleEventController"),
+    methodOverride = require("method-override");
+
+router.use(methodOverride("_method", {
+    methods: ["POST", "GET"]
+}));
 
 // TODO we have to find a better route
 router.post("/addOption/:id", singleEventController.addAdditionalOption);
@@ -21,5 +26,7 @@ router.get("/:id/edit", singleEventController.showEditPage);
 router.get("/:id", singleEventController.showEventPage);
 
 router.get("/:id/closed", singleEventController.showClosedPollPage);
+
+router.delete("/:id/delete", singleEventController.deleteEvent, singleEventController.redirectView);
 
 module.exports = router;
