@@ -9,9 +9,12 @@ const eventSchema = mongoose.Schema({
         unique: true,
     },
     description: String,
-    date: {
+    createdDate: {
         type: Date, 
         required: true,
+    },
+    closedDate: {
+        type: Date
     },    
     options: {
         type: [{name: String, votes: Number}],
@@ -20,15 +23,20 @@ const eventSchema = mongoose.Schema({
     participants: [{
         type: Schema.Types.ObjectId,
         ref: "User"
-    }]
+    }],
+    closed: {
+        type: Boolean,
+        required: true
+    }
 });
 
-eventSchema.methods.getInfo = function() {
+eventSchema.methods.getOngoingPollInfo = function() {
     return `Title: ${this.title} 
             Description: ${this.description}   
-            Date:  ${this.date}
+            CreationDate:  ${this.createdDate}
             Participants: ${this.participants}
-            Options: ${this.options}`;
+            Options: ${this.options}
+            Closed: ${this.closed}`;
 };
 
 eventSchema.methods.findSingleEvents = function() {

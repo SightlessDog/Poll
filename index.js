@@ -7,7 +7,6 @@ const event = require("./models/event");
 const router = require("./routes/router");
 const passport = require("passport");
 const User = require("./models/user"); //needed functionality for passport to work
-const SecondUser = require("./models/second-user");
 const expressSession = require("express-session");
 app.use(
     expressSession({
@@ -63,6 +62,7 @@ app.use(
     })
 );
 app.use(express.json());
+
 app.use("/", router);
 app.use(errorController.respondNoResourceFound)
 app.use(errorController.respondInternalError)
