@@ -5,8 +5,9 @@ const { body, validationResult } = require('express-validator');
 module.exports = {
     showEventPage : (req, res) => {
         let id = req.params.id;
+        let msgText = "";
         Event.findById(id, (err, data) => {
-            res.render("SingleEvent/singleEvent", {event : data});
+            res.render("SingleEvent/singleEvent", {event : data, notification : msgText});
         })
     },
     postVote : (req, res) => {
@@ -35,19 +36,21 @@ module.exports = {
             closed: false
         })
         createdEvent.save((error, savedDoc) => {
-            res.render("SingleEvent/singleEvent", {event : savedDoc});
+            let msgText = ""
+            res.render("SingleEvent/singleEvent", {event : savedDoc, notification : msgText});
             if (error) console.log(error);
         })
     },
     addAdditionalOption : (req, res) => {
         let id = req.params.id;
+        let msgText = "";
         let additionalOption = {name: req.body.additionalOption, votes: 0};
         Event.findById(id).exec().then(re => {
             if (!re.options.includes(additionalOption)) {
                 re.options.push(additionalOption);
             }
             re.save((error, savedDoc) => {
-                res.render("SingleEvent/singleEvent", {event : savedDoc});
+                res.render("SingleEvent/singleEvent", {event : savedDoc, notification : msgText});
                 if (error) console.log(error);
             })
         })
@@ -55,17 +58,13 @@ module.exports = {
     closePoll : (req, res) => {
         //TODO: check if the current user is allowed : only creator can close poll
         let id = req.params.id;
-        Event.findById(id).exec().then(re => {
-            //check if there is a tie for the highest vote        
-            let allVotes = re.options.map((o) => o.votes);
-            console.log("allVotes: " + allVotes)
+        Event.findById(id).exec().then(re => {      
+            let allVotes = re.options.map((o) => o.votes);           
             let highestVote = getHighestVote(re.options);
-            console.log("getHighestVote: " + highestVote)
-            if(findDuplicates(allVotes) == highestVote.votes){
-                //if not: poll cannot be closed
-                //say that there is a tie
-                console.log("There is a tie between options" + highestVote.votes +  " and name: " + highestVote.name)
-                res.render("Thanks/thanks");
+            //see if votes are zero or if there is a tie for the highest result
+            if(highestVote.votes == 0 || allVotes.filter(vote => vote == highestVote.votes).length > 1){
+                let msgText = "There is a tie between options for votes or every vote is zero";          
+                res.render("SingleEvent/singleEvent", {event : re, notification : msgText});
             } else{
                 re.closed = true;            
                 re.save((error, savedDoc) => {
@@ -90,10 +89,11 @@ module.exports = {
     openPoll : (req, res) => {
         //TODO: check if the current user is allowed : only creator can open poll
         let id = req.params.id;
+        let msgText = "";
         Event.findById(id).exec().then(re => {  
             re.closed = false;
             re.save((error, savedDoc) => {
-                res.render("SingleEvent/singleEvent", {event : savedDoc});
+                res.render("SingleEvent/singleEvent", {event : savedDoc, notification : msgText});
                     if (error) console.log(error);
             })
         })
@@ -109,6 +109,7 @@ module.exports = {
     updateEvent : (req, res, next) => {
         let id = req.params.id;
         let optionsPair = [];
+        let msgText = "";
         Event.findById(id).then(event => {
             for (let i = 0; i<req.body.options.length; i++ ) {
                 if (req.body.options[i] === event.options[i].name) {
@@ -128,7 +129,7 @@ module.exports = {
             }).then(e => {
                 res.locals.redirect = `/event/${id}`
                 Event.findById(id).then(newEvent => {
-                    res.render("SingleEvent/singleEvent", {event: newEvent});
+                    res.render("SingleEvent/singleEvent", {event: newEvent, notification : msgText});
                 })
             })
         });
@@ -155,10 +156,4 @@ module.exports = {
 
 function getHighestVote(votes) {
     return highestVote = votes.reduce((currentOption, highest) => currentOption.votes > highest.votes ? currentOption : highest);
-}
-
-function findDuplicates(votes) {
-    let duplicates = votes.filter( (vote, index) => 
-                index !== votes.indexOf(vote));
-        return duplicates;
 }
