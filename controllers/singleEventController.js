@@ -31,6 +31,7 @@ module.exports = {
             title: req.body.title,
             description: req.body.description,
             createdDate: req.body.date,
+            closedDate: req.body.date,
             options : optionsPair,
             participants : [],
             closed: false

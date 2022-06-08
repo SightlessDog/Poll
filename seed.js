@@ -15,6 +15,7 @@ var ongoingPolls = [
         title: "Whatever",
         description: "Vote for something",
         createdDate: Date.now(),
+        closedDate: Date.now(),
         participants: [],
         options: [
             {name: "Yes", votes: 0}, 
@@ -26,6 +27,7 @@ var ongoingPolls = [
         title: "Cinema",
         description: "What movie do you want to see?",
         createdDate: Date.now(),
+        closedDate: Date.now(),
         participants: [],
         options: [
             {name: "Batman", votes: 0}, 
@@ -38,6 +40,7 @@ var ongoingPolls = [
         title: "Fruits",
         description: "Best fruit in the world",
         createdDate: Date.now(),
+        closedDate: Date.now(),
         participants: [],
         options: [
             {name: "Yes", votes: 0}, 
@@ -52,23 +55,23 @@ var ongoingPolls = [
 var users = [
     {
         email: "sightlessdog@poller.com",
-        password: "pass123456"
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"  
     },
     {
         email: "mrschmoke@poller.com",
-        password: "pass123456"
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"       
     },
     {
         email: "mymayu1@poller.com",
-        password: "pass123456"
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"        
     },
     {
         email: "karmagedon@poller.com",
-        password: "pass123456"
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"
     },
     {
         email: "shirokonto@poller.com",
-        password: "pass123456"
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"    
     }
 ];
 
