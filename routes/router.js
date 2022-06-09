@@ -2,13 +2,13 @@
 
 const router = require("express").Router(),
     userRoutes = require("./user"),
-    eventRoutes = require("./event"),
-    eventsRoutes = require("./events")
+    singlePollRoutes = require("./singlePoll"),
+    pollsRoutes = require("./polls")
 
 
 router.use("/register", userRoutes);
-router.use("/event", eventRoutes);
-router.use("/events", eventsRoutes);
+router.use("/singlePoll", singlePollRoutes);
+router.use("/polls", pollsRoutes);
 router.use("/", (req, res) => {
     res.render("index")
 })

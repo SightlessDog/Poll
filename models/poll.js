@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = require("mongoose")
 
 
-const eventSchema = mongoose.Schema({
+const pollSchema = mongoose.Schema({
     title: {
         type: String, 
         required: true,
@@ -30,7 +30,7 @@ const eventSchema = mongoose.Schema({
     }
 });
 
-eventSchema.methods.getOngoingPollInfo = function() {
+pollSchema.methods.getOngoingPollInfo = function() {
     return `Title: ${this.title} 
             Description: ${this.description}   
             CreationDate:  ${this.createdDate}
@@ -39,13 +39,13 @@ eventSchema.methods.getOngoingPollInfo = function() {
             Closed: ${this.closed}`;
 };
 
-eventSchema.methods.findSingleEvents = function() {
-    return this.model("Events").find({title: this.title}).exec();
+pollSchema.methods.findSinglePolls = function() {
+    return this.model("Polls").find({title: this.title}).exec();
 }
 
-eventSchema.virtual("titleDesc")
+pollSchema.virtual("titleDesc")
     .get(function() {
         return `${this.title} - ${this.description}`;
     });
     
-module.exports = mongoose.model("Event", eventSchema);
+module.exports = mongoose.model("Poll", pollSchema);

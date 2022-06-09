@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-Events = require("./models/event");
+Polls = require("./models/poll");
 Users = require("./models/user");
 
 
@@ -104,8 +104,8 @@ var closedPolls = [
     }
 ];
 
-Events.deleteMany().exec()
-    .then(() => console.log("Events data is empty!"));
+Polls.deleteMany().exec()
+    .then(() => console.log("Polls data is empty!"));
 
 Users.deleteMany().exec()
     .then(() => console.log("Users data is empty!"));
@@ -113,7 +113,7 @@ Users.deleteMany().exec()
 var commands = [];
 
 ongoingPolls.forEach((e) => {
-    commands.push(Events.create({
+    commands.push(Polls.create({
         title: e.title,
         description: e.description,
         createdDate: e.createdDate,
@@ -127,12 +127,12 @@ users.forEach((u) => {
     commands.push(Users.create({
         email: u.email,
         password: u.password,
-        events: u.events
+        polls: u.polls
     }));
 });
 
 closedPolls.forEach((c) => {
-    commands.push(Events.create({
+    commands.push(Polls.create({
         title: c.title,
         description: c.description,
         createdDate: c.createdDate,

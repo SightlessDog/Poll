@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="css/app.css">
 <div class="flex flex-col w-screen h-screen justify-center items-center">
 <div class="mt-4 px-2">
-  <div class="max-w-2xl">Create an event: </div>
-  <form class="bg-white w-80 h-30 rounded-md shadow-lg mt-4 px-4 py-4" id="eventForm" action="/event" method="POST">
+  <div class="max-w-2xl">Create a poll: </div>
+  <form class="bg-white w-80 h-30 rounded-md shadow-lg mt-4 px-4 py-4" id="pollForm" action="/singlePoll" method="POST">
     <div class="relative z-0 w-full mb-6 group">
       <input type="text" name="title" required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
       <label for="title" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Title</label>
@@ -33,22 +33,22 @@
   </form>
 </div>
 
-<h1 class="mt-4">Ongoing Events</h1>
+<h1 class="mt-4">Ongoing Polls</h1>
 </br>
-<div id="events-container">
-<% let openPolls = events.filter(poll => poll.closed == false); %>
-<% openPolls.forEach(event => { %>
+<div id="polls-container">
+<% let openPolls = polls.filter(poll => poll.closed == false); %>
+<% openPolls.forEach(poll => { %>
     <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
         <div class="flex items-center justify-between">
-          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= event.createdDate.toUTCString() %> </span> 
-          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= event.participants.length %></a>
+          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= poll.createdDate.toUTCString() %> </span> 
+          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= poll.participants.length %></a>
         </div> 
         <div class="mt-2">
-          <a href="/event/<%= event._id %>" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= event.title %></a> 
-          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= event.description %></p>
+          <a href="/singlePoll/<%= poll._id %>" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= poll.title %></a> 
+          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= poll.description %></p>
         </div> 
         <div class="flex items-center justify-between mt-4">
-          <a href="/event/<%= event._id %>" class="text-blue-600 dark:text-blue-400 hover:underline">Vote ⟶</a> 
+          <a href="/singlePoll/<%= poll._id %>" class="text-blue-600 dark:text-blue-400 hover:underline">Vote ⟶</a> 
         </div>
     </div>
 <% }); %>
@@ -57,20 +57,20 @@
 
 <h1>Closed Polls</h1>
 </br>
-<div id="events-container">
-  <% let closedPolls = events.filter(poll => poll.closed == true); %>
-  <% closedPolls.forEach( event => {%>
+<div id="polls-container">
+  <% let closedPolls = polls.filter(poll => poll.closed == true); %>
+  <% closedPolls.forEach( poll => {%>
       <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
         <div class="flex items-center justify-between">
-          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= event.createdDate.toUTCString() %> </span> 
-          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= event.participants.length %></a>
+          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= poll.createdDate.toUTCString() %> </span> 
+          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= poll.participants.length %></a>
         </div> 
         <div class="mt-2">
-          <a href="/event/<%= event._id %>/closed" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= event.title %></a> 
-          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= event.description %></p>
+          <a href="/singlePoll/<%= poll._id %>/closed" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= poll.title %></a> 
+          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= poll.description %></p>
         </div> 
         <div class="flex items-center justify-between mt-4">
-          <a href="/event/closed/<%= event._id %>/closed" class="text-blue-600 dark:text-blue-400 hover:underline">See Result ⟶</a> 
+          <a href="/singlePoll/closed/<%= poll._id %>/closed" class="text-blue-600 dark:text-blue-400 hover:underline">See Result ⟶</a> 
         </div>
     </div>
     <% }); %>
