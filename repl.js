@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"),
-      Event = require("./models/event"),
+      Poll = require("./models/poll"),
       User = require("./models/user");
 
 
@@ -9,9 +9,9 @@ mongoose.connect(
     
 mongoose.Promise = global.Promise;
     
-var testEvent;
+var testPoll;
 
-Event.create({
+Poll.create({
     title: "REPLVote",
     description: "Does it help to learn this lesson?",
     createdDate: Date.now(),
@@ -27,14 +27,14 @@ Event.create({
         votes: 2
     }],
     closed: false
-}).then(event => {
-    testEvent = event;
-    return Event.findOne({
-        title: event.title
+}).then(poll => {
+    testPoll = poll;
+    return Poll.findOne({
+        title: poll.title
     });
-}).then(event => {  
-        testEvent = event;
-        testEvent.save().then(event => console.log("event updated"));
+}).then(poll => {  
+        testPoll = poll;
+        testPoll.save().then(poll => console.log("poll updated"));
     })
 .catch(error => console.log(error.message));    
 

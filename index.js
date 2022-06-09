@@ -3,7 +3,6 @@ const express = require('express');
 const layouts = require("express-ejs-layouts") //require ejs layout rendering
 const app = express();
 const mongoose = require("mongoose");
-const event = require("./models/event");
 const router = require("./routes/router");
 const passport = require("passport");
 const User = require("./models/user"); //needed functionality for passport to work
