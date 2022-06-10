@@ -47,10 +47,14 @@ module.exports = {
         let msgText = "";
         let additionalOption = {name: req.body.additionalOption, votes: 0};
         Poll.findById(id).exec().then(re => {
-            if (!re.options.includes(additionalOption)) {
+            let allOptions = re.options.map((o) => o.name);
+            // console.log("allOptions: " + allOptions)
+
+            if (!allOptions.includes(additionalOption.name)) {
                 re.options.push(additionalOption);
             }
             re.save((error, savedDoc) => {
+                msgText = "This option already exists!"
                 res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
                 if (error) console.log(error);
             })
