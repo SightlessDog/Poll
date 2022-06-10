@@ -5,6 +5,7 @@ const router = require("express").Router(),
 
 router.post("/register", userController.validate, userController.createUser, userController.redirectView);
 router.get("/register", userController.showRegister);
+router.get("/user", userController.showProfile);
 router.get("/profile", userController.showProfile);
 router.get("/signIn", userController.showSignInPage);
 router.get("/resetPassword", userController.showResetPassword);
