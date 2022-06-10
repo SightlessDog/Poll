@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"),
-      Event = require("./models/event"),
+      Poll = require("./models/poll"),
       User = require("./models/user");
 
 
@@ -9,12 +9,13 @@ mongoose.connect(
     
 mongoose.Promise = global.Promise;
     
-var testEvent;
+var testPoll;
 
-Event.create({
+Poll.create({
     title: "REPLVote",
     description: "Does it help to learn this lesson?",
-    date: Date.now(),
+    createdDate: Date.now(),
+    closedDate: Date.now(),
     participants: [],
     options: 
     [{
@@ -24,15 +25,16 @@ Event.create({
     {
         name: "How about no?",
         votes: 2
-    }]
-}).then(event => {
-    testEvent = event;
-    return Event.findOne({
-        title: event.title
+    }],
+    closed: false
+}).then(poll => {
+    testPoll = poll;
+    return Poll.findOne({
+        title: poll.title
     });
-}).then(event => {  
-        testEvent = event;
-        testEvent.save().then(event => console.log("event updated"));
+}).then(poll => {  
+        testPoll = poll;
+        testPoll.save().then(poll => console.log("poll updated"));
     })
 .catch(error => console.log(error.message));    
 
@@ -44,44 +46,9 @@ User.create({
         last: "Parker"
     },
     email: "peter@spiderman.com",
-    password: "spiderpig"
+    password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"
 })
 .then(user => testUser = user)
 .catch(error => console.log(error.message));
 
 //ENTER: 'node' then '.load repl.js'in console!
-
-//console.log(testEvent.title);
-
-
-
-//lection 17
-/* 
-Event.remove({})
-     .then((items) => console.log(`Removed ${items.n} records!`))
-     .then(() => {
-         return Event.remove({});
-     })
-     .then((items) => console.log(`Removed ${items.n} records!`))
-     .then(() => {
-         return Event.create({
-             title: "REPLVote",
-             description: "Does it help to learn this lesson?",
-             date: Date.now(),
-             participants: 0,
-             options: ["Why yes!", "How about no?"]
-         }); 
-     })
-     .then(event => {
-         console.log(`Created Event: ${event.getOngoingPollInfo()}`);
-     })
-     .then(() => {
-         return Event.findOne( {
-             title: "REPLVote"
-         });
-     })
-     .then(event => {
-         testEvent = event;
-         console.log(`Found one event: ${event.getOngoingPollInfo()}`);
-     });
-      */

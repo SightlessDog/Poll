@@ -1,17 +1,18 @@
-const Event = require("../models/event");
+const Poll = require("../models/poll");
 const User = require("../models/user");
 const { body, validationResult } = require('express-validator');
 
 module.exports = {
-    showEventPage : (req, res) => {
+    showPollPage : (req, res) => {
         let id = req.params.id;
-        Event.findById(id, (err, data) => {
-            res.render("SingleEvent/singleEvent", {event : data});
+        let msgText = "";
+        Poll.findById(id, (err, data) => {
+            res.render("SinglePoll/singlePoll", {poll : data, notification : msgText});
         })
     },
     postVote : (req, res) => {
         const id = req.params.id;
-        Event.findById(id).exec().then(re => {
+        Poll.findById(id).exec().then(re => {
             User.findOne({email: "jon@jonwexler.com"}).exec().then(r => {
                 re.options.find(el => el.name === req.body.option ? el.votes += 1 : null);
                 if (!re.participants.includes(r._id)) {
@@ -21,33 +22,36 @@ module.exports = {
             });
         })
     },
-    createEvent : (req, res, next) => {
+    createPoll : (req, res, next) => {
         const optionsPair = [];
         req.body.options.forEach(option => {
             optionsPair.push({name: option, votes: 0});
         });  
-        const createdEvent = new Event({
+        const createdPoll = new Poll({
             title: req.body.title,
             description: req.body.description,
             createdDate: req.body.date,
+            closedDate: req.body.date,
             options : optionsPair,
             participants : [],
             closed: false
         })
-        createdEvent.save((error, savedDoc) => {
-            res.render("SingleEvent/singleEvent", {event : savedDoc});
+        createdPoll.save((error, savedDoc) => {
+            let msgText = ""
+            res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
             if (error) console.log(error);
         })
     },
     addAdditionalOption : (req, res) => {
         let id = req.params.id;
+        let msgText = "";
         let additionalOption = {name: req.body.additionalOption, votes: 0};
-        Event.findById(id).exec().then(re => {
+        Poll.findById(id).exec().then(re => {
             if (!re.options.includes(additionalOption)) {
                 re.options.push(additionalOption);
             }
             re.save((error, savedDoc) => {
-                res.render("SingleEvent/singleEvent", {event : savedDoc});
+                res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
                 if (error) console.log(error);
             })
         })
@@ -55,21 +59,17 @@ module.exports = {
     closePoll : (req, res) => {
         //TODO: check if the current user is allowed : only creator can close poll
         let id = req.params.id;
-        Event.findById(id).exec().then(re => {
-            //check if there is a tie for the highest vote        
-            let allVotes = re.options.map((o) => o.votes);
-            console.log("allVotes: " + allVotes)
+        Poll.findById(id).exec().then(re => {      
+            let allVotes = re.options.map((o) => o.votes);           
             let highestVote = getHighestVote(re.options);
-            console.log("getHighestVote: " + highestVote)
-            if(findDuplicates(allVotes) == highestVote.votes){
-                //if not: poll cannot be closed
-                //say that there is a tie
-                console.log("There is a tie between options" + highestVote.votes +  " and name: " + highestVote.name)
-                res.render("Thanks/thanks");
+            //see if votes are zero or if there is a tie for the highest result
+            if(highestVote.votes == 0 || allVotes.filter(vote => vote == highestVote.votes).length > 1){
+                let msgText = "There is a tie between options for votes or every vote is zero";          
+                res.render("SinglePoll/singlePoll", {poll : re, notification : msgText});
             } else{
                 re.closed = true;            
                 re.save((error, savedDoc) => {
-                    res.render("SingleEvent/closedPoll", {event : savedDoc, finalResult : highestVote});
+                    res.render("SinglePoll/closedPoll", {poll : savedDoc, finalResult : highestVote});
                     if (error) console.log(error);
                 })
             }
@@ -78,10 +78,10 @@ module.exports = {
     showClosedPollPage : (req, res) => {
         let id = req.params.id;
     
-        Event.findById(id).exec().then(re => {
+        Poll.findById(id).exec().then(re => {
             let allVotes = re.options.map((o) => o.votes);
             let highestVote = getHighestVote(re.options);
-            res.render("SingleEvent/closedPoll", {event : re, finalResult : highestVote});
+            res.render("SinglePoll/closedPoll", {poll : re, finalResult : highestVote});
         }).catch((error) => {
             console.log(error.message);
             return [];
@@ -90,45 +90,47 @@ module.exports = {
     openPoll : (req, res) => {
         //TODO: check if the current user is allowed : only creator can open poll
         let id = req.params.id;
-        Event.findById(id).exec().then(re => {  
+        let msgText = "";
+        Poll.findById(id).exec().then(re => {  
             re.closed = false;
             re.save((error, savedDoc) => {
-                res.render("SingleEvent/singleEvent", {event : savedDoc});
+                res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
                     if (error) console.log(error);
             })
         })
     },
     showEditPage : (req, res) => {
         let id = req.params.id;
-        Event.findById(id).exec().then(re => {
+        Poll.findById(id).exec().then(re => {
             console.log(re)
-            res.render("SingleEvent/editEvent", {event: re, date: re.createdDate.getFullYear() + "-" + (re.createdDate.getMonth() >= 10 ? re.createdDate.getMonth() + 1 : "0"+(re.createdDate.getMonth() + 1))
+            res.render("SinglePoll/editPoll", {poll: re, date: re.createdDate.getFullYear() + "-" + (re.createdDate.getMonth() >= 10 ? re.createdDate.getMonth() + 1 : "0"+(re.createdDate.getMonth() + 1))
              + "-" + (re.createdDate.getDate() >= 10 ? re.createdDate.getDate() : "0" +(re.createdDate.getDate()))})
         })
     },
-    updateEvent : (req, res, next) => {
+    updatePoll : (req, res, next) => {
         let id = req.params.id;
         let optionsPair = [];
-        Event.findById(id).then(event => {
+        let msgText = "";
+        Poll.findById(id).then(poll => {
             for (let i = 0; i<req.body.options.length; i++ ) {
-                if (req.body.options[i] === event.options[i].name) {
-                    optionsPair.push({name: event.options[i].name, votes: event.options[i].votes});
+                if (req.body.options[i] === poll.options[i].name) {
+                    optionsPair.push({name: poll.options[i].name, votes: poll.options[i].votes});
                 } else {
                     optionsPair.push({name: req.body.options[i], votes: 0});
                 }
             }
-            let eventParams = {
+            let pollParams = {
                 title: req.body.title,
                 description: req.body.description,
                 date: req.body.date,
                 options : optionsPair,
             } 
-            Event.findByIdAndUpdate(id, {
-                $set: eventParams
+            Poll.findByIdAndUpdate(id, {
+                $set: pollParams
             }).then(e => {
-                res.locals.redirect = `/event/${id}`
-                Event.findById(id).then(newEvent => {
-                    res.render("SingleEvent/singleEvent", {event: newEvent});
+                res.locals.redirect = `/poll/${id}`
+                Poll.findById(id).then(newPoll => {
+                    res.render("SinglePoll/singlePoll", {poll: newPoll, notification : msgText});
                 })
             })
         });
@@ -138,16 +140,16 @@ module.exports = {
         if (redirectPath) res.redirect(redirectPath);
         else next();
     },
-    deleteEvent: (req, res, next) => {
+    deletePoll: (req, res, next) => {
         let id = req.params.id;
-        Event.findByIdAndRemove(id)
+        Poll.findByIdAndRemove(id)
             .then(() => {
                 console.log(`Deleted poll: ${id}`);
-                res.locals.redirect = "/events";
+                res.locals.redirect = "/polls";
                 next();
             })
             .catch(error => {
-                console.log(`Error deleting event by ID: ${error.message}`);
+                console.log(`Error deleting poll by ID: ${error.message}`);
                 next();
             });
     }
@@ -155,10 +157,4 @@ module.exports = {
 
 function getHighestVote(votes) {
     return highestVote = votes.reduce((currentOption, highest) => currentOption.votes > highest.votes ? currentOption : highest);
-}
-
-function findDuplicates(votes) {
-    let duplicates = votes.filter( (vote, index) => 
-                index !== votes.indexOf(vote));
-        return duplicates;
 }

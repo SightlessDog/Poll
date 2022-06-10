@@ -1,15 +1,15 @@
 <link rel="stylesheet" href="css/app.css" />
 <form
   class="bg-white w-80 h-30 rounded-md shadow-lg mt-4 px-4 py-4"
-  id="eventForm"
+  id="pollForm"
   method="POST"
-  action="<%=`/event/${event._id}/update`%>"
+  action="<%=`/singlePoll/${poll._id}/update`%>"
 >
   <div class="relative z-0 w-full mb-6 group">
     <input
       type="text"
       name="title"
-      value="<%= event.title %>"
+      value="<%= poll.title %>"
       required
       class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
     />
@@ -23,7 +23,7 @@
     <input
       type="text"
       name="description"
-      value="<%= event.description %>"
+      value="<%= poll.description %>"
       required
       id="description"
       class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -50,11 +50,11 @@
     >
   </div>
   <div class="grid xl:grid-cols-2 xl:gap-6" id="multipleOptions">
-    <% for (var i = 0; i < event.options.length; i++) { %>
+    <% for (var i = 0; i < poll.options.length; i++) { %>
         <input
         type="text"
         name="options"
-        value="<%= event.options[i].name %>"
+        value="<%= poll.options[i].name %>"
         id="floating_first_name"
         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         required
@@ -62,7 +62,7 @@
       <label
         for="options"
         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        ><%= event.options[i].name %></label
+        ><%= poll.options[i].name %></label
       >
     </br>
     <% } %> 
