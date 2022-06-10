@@ -29,4 +29,6 @@ router.get("/:id/closed", singlePollController.showClosedPollPage);
 
 router.delete("/:id/delete", singlePollController.deletePoll, singlePollController.redirectView);
 
+router.get("/:id/deleteOption/:name", singlePollController.deletePollOption);
+
 module.exports = router;

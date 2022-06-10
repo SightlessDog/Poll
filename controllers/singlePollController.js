@@ -102,7 +102,6 @@ module.exports = {
     showEditPage : (req, res) => {
         let id = req.params.id;
         Poll.findById(id).exec().then(re => {
-            console.log(re)
             res.render("SinglePoll/editPoll", {poll: re, date: re.createdDate.getFullYear() + "-" + (re.createdDate.getMonth() >= 10 ? re.createdDate.getMonth() + 1 : "0"+(re.createdDate.getMonth() + 1))
              + "-" + (re.createdDate.getDate() >= 10 ? re.createdDate.getDate() : "0" +(re.createdDate.getDate()))})
         })
@@ -152,6 +151,23 @@ module.exports = {
                 console.log(`Error deleting poll by ID: ${error.message}`);
                 next();
             });
+    },
+    deletePollOption: (req, res, next) => {
+        let id = req.params.id
+        let optionName = req.params.name
+        Poll.updateOne({id}, {
+            $pull: {
+                "options": {
+                    "name":  optionName,
+                }
+            }
+        }).then(() => {
+            res.locals.redirect = "/polls";
+            next();
+        }).catch(error => {
+            console.log(`Error deleting poll by ID: ${error.message}`);
+            next();
+        });
     }
 }
 
