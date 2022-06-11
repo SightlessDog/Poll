@@ -47,10 +47,9 @@ module.exports = {
         let msgText = "";
         let additionalOption = {name: req.body.additionalOption, votes: 0};
         Poll.findById(id).exec().then(re => {
-            let allOptions = re.options.map((o) => o.name);
-            // console.log("allOptions: " + allOptions)
+            let allOptions = re.options.map((o) => o.name.toLowerCase());
 
-            if (!allOptions.includes(additionalOption.name)) {
+            if (!allOptions.includes(additionalOption.name.toLowerCase())) {
                 re.options.push(additionalOption);
             }
             re.save((error, savedDoc) => {
