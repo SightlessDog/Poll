@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px; margin-top: 50px; margin-bottom: 50px;">
         <div class="mt-2">
           <a href="/singlePoll/<%= poll._id %>" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= poll.title %></a> 
@@ -42,3 +43,8 @@
         <% } %>
         
     </div>
+    <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick
+        rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+    {/* Same as */}
+    <ToastContainer />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

@@ -18,7 +18,11 @@ module.exports = {
                 if (!re.participants.includes(r._id)) {
                     re.participants.push(r._id);
                 }                 
-                re.save().then(r => res.render("Thanks/thanks"));
+                re.save((error, savedDoc) => {
+                    msgText = "Thank you for your vote!"
+                    res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
+                    if (error) console.log(error);
+                })
             });
         })
     },
