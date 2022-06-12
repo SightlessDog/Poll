@@ -63,7 +63,7 @@
   </form>
 </div>
 
-<h1 class="mt-4">Ongoing Polls</h1>
+<h1 class="text-2xl font-bold text-blue-700 dark:text-blue"><br>Ongoing Polls</h1>
 </br>
 <div id="polls-container">
 <% let openPolls = polls.filter(poll => poll.closed == false); %>
@@ -85,7 +85,7 @@
 </div>
 </br>
 
-<h1>Closed Polls</h1>
+<h1 class="text-2xl font-bold text-blue-700 dark:text-blue"><br>Closed Polls</h1>
 </br>
 <div id="polls-container">
   <% let closedPolls = polls.filter(poll => poll.closed == true); %>
