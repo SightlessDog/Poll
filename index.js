@@ -6,7 +6,10 @@ const mongoose = require("mongoose");
 const router = require("./routes/router");
 const passport = require("passport");
 const User = require("./models/user"); //needed functionality for passport to work
-const expressSession = require("express-session");
+const expressSession = require("express-session"),
+    cookieParser = require("cookie-parser"),
+    connectFlash = require("connect-flash");
+app.use(cookieParser("secret_passcode"));
 app.use(
     expressSession({
         secret: "secretContract",
@@ -17,6 +20,7 @@ app.use(
         saveUninitialized: false
     })
 );
+app.use(connectFlash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(User.createStrategy());
@@ -25,6 +29,10 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.loggedIn = req.isAuthenticated();
     res.locals.currentUser = req.user;
+    next();
+});
+app.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
     next();
 });
 let dburl = "mongodb://127.0.0.1:27017/mongodb-poll"
@@ -38,6 +46,7 @@ db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
+//TODO REMOVE USER!!
 User.create({
     name: {
     first: "Jon",
@@ -47,9 +56,9 @@ User.create({
     password: "pass123"
 })
 .then(user => {
-    console.log("User created")
+    console.log("User created - remove this user from index.js as soon as we implement user sessions")
 })
-.catch(error => console.log(error.message));
+.catch(error => console.log(error.message + " Remove this user from index.js as soon as we implement user sessions"));
 
 app.set("view engine", "ejs")
 app.set("port", process.env.PORT || 3000);
