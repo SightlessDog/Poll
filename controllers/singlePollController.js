@@ -12,13 +12,27 @@ module.exports = {
     },
     postVote : (req, res) => {
         const id = req.params.id;
-        Poll.findById(id).exec().then(re => {
-            User.findOne({email: "jon@jonwexler.com"}).exec().then(r => {
-                re.options.find(el => el.name === req.body.option ? el.votes += 1 : null);
+        Poll.findById(id).exec()
+        .then(re => {
+            //TODO: replace jon with current user
+            User.findOne({email: "jon@jonwexler.com"}).exec()
+            .then(r => {
+                re.options.find(chosenOption => chosenOption.name === req.body.option ? chosenOption.votes += 1 : null);
                 if (!re.participants.includes(r._id)) {
                     re.participants.push(r._id);
                 }                 
-                re.save().then(r => res.render("Thanks/thanks"));
+                re.save((error, savedDoc) => {
+                    msgText = "Thank you for your vote!"
+                    res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
+                    req.flash("success", `Thank you for your vote!`);
+                    if (error) {
+                        req.flash(
+                            "error",
+                            `Failed to place vote because: ➥${error.message}.`
+                        );
+                        console.log(error);
+                    }
+                })
             });
         })
     },
