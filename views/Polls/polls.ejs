@@ -1,35 +1,5 @@
 <link rel="stylesheet" href="css/app.css">
-<script type="text/javascript">
-  const addedOptions = [];
-  function addOptionField() {
-    const newDiv=document.createElement("div");
-    newDiv.className="relative z-0 w-full mb-6 group";  
-    // new <input type="text"
-    const newInputField = document.createElement("input");
-    newInputField.setAttribute('type', "text");
-    newInputField.setAttribute('name', "options");
-    newInputField.setAttribute("id","floating_last_name");
-    newInputField.setAttribute('class',"block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer");
-    newInputField.setAttribute('required',"true");
-    // new <label for="options"
-    const newLabel = document.createElement("label");
-    newLabel.setAttribute('for', "options");
-    newLabel.setAttribute('class',"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6")
-    newLabel.innerText = "Additional option";
-    newDiv.appendChild(newInputField);
-    newDiv.appendChild(newLabel);
-    //Append to body
-    document.getElementById("multipleOptions").appendChild(newDiv);
-    addedOptions.push(newDiv);
-  }
-
-  function removeLastOptionField() {
-    if(document.getElementById("multipleOptions").childElementCount>2) document.getElementById("multipleOptions").removeChild(document.getElementById("multipleOptions").lastChild);    
-  }
-
-
-</script>
-<div class="biggestContainer flex flex-col w-screen justify-center items-center">
+<div class="flex flex-col w-screen  justify-center items-center">
 <div class="mt-4 px-2">
   <div class="max-w-2xl">Create a poll: </div>
   <form class="bg-white w-80 h-30 rounded-md shadow-lg mt-4 px-4 py-4" id="pollForm" action="/singlePoll" method="POST">
@@ -63,14 +33,14 @@
   </form>
 </div>
 
-<h1 class="text-2xl font-bold text-blue-700 dark:text-blue"><br>Ongoing Polls</h1>
+<h1 class="mt-4">Ongoing Polls</h1>
 </br>
 <div id="polls-container">
 <% let openPolls = polls.filter(poll => poll.closed == false); %>
 <% openPolls.forEach(poll => { %>
     <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
         <div class="flex items-center justify-between">
-          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= format(poll.createdDate) %> </span> 
+          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= poll.createdDate.toUTCString() %> </span> 
           <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= poll.participants.length %></a>
         </div> 
         <div class="mt-2">
@@ -85,7 +55,7 @@
 </div>
 </br>
 
-<h1 class="text-2xl font-bold text-blue-700 dark:text-blue"><br>Closed Polls</h1>
+<h1>Closed Polls</h1>
 </br>
 <div id="polls-container">
   <% let closedPolls = polls.filter(poll => poll.closed == true); %>
@@ -108,3 +78,31 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  const addedOptions = [];
+  function addOptionField() {
+    const newDiv=document.createElement("div");
+    newDiv.className="relative z-0 w-full mb-6 group";  
+    // new <input type="text"
+    const newInputField = document.createElement("input");
+    newInputField.setAttribute('type', "text");
+    newInputField.setAttribute('name', "options");
+    newInputField.setAttribute("id","floating_last_name");
+    newInputField.setAttribute('class',"block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer");
+    newInputField.setAttribute('required',"true");
+    // new <label for="options"
+    const newLabel = document.createElement("label");
+    newLabel.setAttribute('for', "options");
+    newLabel.setAttribute('class',"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6")
+    newLabel.innerText = "Additional option";
+    newDiv.appendChild(newInputField);
+    newDiv.appendChild(newLabel);
+    //Append to body
+    document.getElementById("multipleOptions").appendChild(newDiv);
+    addedOptions.push(newDiv);
+  }
+
+  function removeLastOptionField() {
+    if(document.getElementById("multipleOptions").childElementCount>2) document.getElementById("multipleOptions").removeChild(document.getElementById("multipleOptions").lastChild);    
+  }
+</script>

@@ -12,26 +12,15 @@ module.exports = {
     },
     postVote : (req, res) => {
         const id = req.params.id;
-        //console.log("id is: " + id);
-        Poll.findById(id).exec()
-            .then(re => {
-                //TODO: replace jon with current user
-                User.findOne({ email: "jon@jonwexler.com" })
-                    .exec()
-                    .then(user => {
-                            re.options.find(chosenOption => chosenOption.name === req.body.option ? chosenOption.votes += 1 : null);
-                            if (!re.participants.includes(user._id)) { re.participants.push(user._id); }                 
-                            re.save((error, savedDoc) => {
-                                msgText = "Thank you for your vote!"
-                                req.flash("success", `Thank you for your vote!`);
-                                res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
-                                if (error) {
-                                        req.flash( "error", `Failed to place vote because: ${error.message}.` );
-                                    next();
-                                }
-                            })
-                    });
-            })
+        Poll.findById(id).exec().then(re => {
+            User.findOne({email: "jon@jonwexler.com"}).exec().then(r => {
+                re.options.find(el => el.name === req.body.option ? el.votes += 1 : null);
+                if (!re.participants.includes(r._id)) {
+                    re.participants.push(r._id);
+                }                 
+                re.save().then(r => res.render("Thanks/thanks"));
+            });
+        })
     },
     createPoll : (req, res, next) => {
         const optionsPair = [];
@@ -58,13 +47,10 @@ module.exports = {
         let msgText = "";
         let additionalOption = {name: req.body.additionalOption, votes: 0};
         Poll.findById(id).exec().then(re => {
-            let allOptions = re.options.map((o) => o.name.toLowerCase());
-
-            if (!allOptions.includes(additionalOption.name.toLowerCase())) {
+            if (!re.options.includes(additionalOption)) {
                 re.options.push(additionalOption);
             }
             re.save((error, savedDoc) => {
-                msgText = "This option already exists!"
                 res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
                 if (error) console.log(error);
             })
@@ -116,6 +102,7 @@ module.exports = {
     showEditPage : (req, res) => {
         let id = req.params.id;
         Poll.findById(id).exec().then(re => {
+            console.log(re)
             res.render("SinglePoll/editPoll", {poll: re, date: re.createdDate.getFullYear() + "-" + (re.createdDate.getMonth() >= 10 ? re.createdDate.getMonth() + 1 : "0"+(re.createdDate.getMonth() + 1))
              + "-" + (re.createdDate.getDate() >= 10 ? re.createdDate.getDate() : "0" +(re.createdDate.getDate()))})
         })
@@ -165,23 +152,6 @@ module.exports = {
                 console.log(`Error deleting poll by ID: ${error.message}`);
                 next();
             });
-    },
-    deletePollOption: (req, res, next) => {
-        let id = req.params.id
-        let optionName = req.params.name
-        Poll.updateOne({id}, {
-            $pull: {
-                "options": {
-                    "name":  optionName,
-                }
-            }
-        }).then(() => {
-            res.locals.redirect = "/polls";
-            next();
-        }).catch(error => {
-            console.log(`Error deleting poll by ID: ${error.message}`);
-            next();
-        });
     }
 }
 
