@@ -12,29 +12,26 @@ module.exports = {
     },
     postVote : (req, res) => {
         const id = req.params.id;
+        //console.log("id is: " + id);
         Poll.findById(id).exec()
-        .then(re => {
-            //TODO: replace jon with current user
-            User.findOne({email: "jon@jonwexler.com"}).exec()
-            .then(r => {
-                re.options.find(chosenOption => chosenOption.name === req.body.option ? chosenOption.votes += 1 : null);
-                if (!re.participants.includes(r._id)) {
-                    re.participants.push(r._id);
-                }                 
-                re.save((error, savedDoc) => {
-                    msgText = "Thank you for your vote!"
-                    res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
-                    req.flash("success", `Thank you for your vote!`);
-                    if (error) {
-                        req.flash(
-                            "error",
-                            `Failed to place vote because: ➥${error.message}.`
-                        );
-                        console.log(error);
-                    }
-                })
-            });
-        })
+            .then(re => {
+                //TODO: replace jon with current user
+                User.findOne({ email: "jon@jonwexler.com" })
+                    .exec()
+                    .then(user => {
+                            re.options.find(chosenOption => chosenOption.name === req.body.option ? chosenOption.votes += 1 : null);
+                            if (!re.participants.includes(user._id)) { re.participants.push(user._id); }                 
+                            re.save((error, savedDoc) => {
+                                msgText = "Thank you for your vote!"
+                                req.flash("success", `Thank you for your vote!`);
+                                res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
+                                if (error) {
+                                        req.flash( "error", `Failed to place vote because: ${error.message}.` );
+                                    next();
+                                }
+                            })
+                    });
+            })
     },
     createPoll : (req, res, next) => {
         const optionsPair = [];

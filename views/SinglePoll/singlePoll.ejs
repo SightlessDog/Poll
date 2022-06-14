@@ -43,3 +43,12 @@
         <% } %>
         
     </div>
+    <div class="flashes">
+        <% if (flashMessages) { %>
+            <% if (flashMessages.success) { %>
+                <div class="flash success"><%= flashMessages.success %></div>
+            <% } else if (flashMessages.error) { %>
+                <div class="flash error"><%= flashMessages.error %></div>
+            <% } %>
+        <% } %>
+    </div>

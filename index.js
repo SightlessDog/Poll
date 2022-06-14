@@ -1,15 +1,16 @@
-const errorController = require("./controllers/errorController")
-const express = require('express');
-const layouts = require("express-ejs-layouts") //require ejs layout rendering
-const app = express();
-const mongoose = require("mongoose");
-const router = require("./routes/router");
-const passport = require("passport");
-const User = require("./models/user"); //needed functionality for passport to work
-const expressSession = require("express-session"),
-    cookieParser = require("cookie-parser"),
-    connectFlash = require("connect-flash");
-app.use(cookieParser("secret_passcode"));
+const errorController = require("./controllers/errorController"),
+      express = require('express'),
+      layouts = require("express-ejs-layouts"), //require ejs layout rendering
+      app = express(),
+      mongoose = require("mongoose"),
+      router = require("./routes/router"),
+      passport = require("passport"),
+      User = require("./models/user"), //needed functionality for passport to work
+      expressSession = require("express-session"),
+      cookieParser = require("cookie-parser"),
+      connectFlash = require("connect-flash");
+
+app.use(cookieParser("secretContract"));
 app.use(
     expressSession({
         secret: "secretContract",
