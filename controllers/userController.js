@@ -84,7 +84,7 @@ module.exports = {
     }),
 
     showProfile: (req, res) => {
-        res.render("Profile/profile");
+        res.render("Register/profile");
     },
     showRegister: (req, res) => {
         res.render("register/index");
