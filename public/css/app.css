@@ -82,12 +82,3 @@ input[type='submit'] {
   font-family: 'Exo 2', sans-serif;
   font-weight: bold;
 }
-
-.biggestContainer{
-  padding-bottom: 56px;
-}
-
-.flashes{
-  position: absolute;
-  z-index: 100;
-}
