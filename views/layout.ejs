@@ -1,14 +1,5 @@
 <script src="https://cdn.tailwindcss.com"></script>
-<body>
-    <div class="flashes">
-        <% if (flashMessages) { %>
-            <% if (flashMessages.success) { %>
-                <div class="flash success"><%= flashMessages.success %></div>
-            <% } else if (flashMessages.error) { %>
-                <div class="flash error"><%= flashMessages.error %></div>
-            <% } %>
-       <% } %>
-    </div>
+<body>    
     <%- include('Partials/navigation.ejs') %>
     <%- body %>
 </body>
