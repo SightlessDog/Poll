@@ -78,6 +78,57 @@ module.exports = {
       }
     });
   },
+  sendMailForPasswordReset: (req, res) => {
+    res.render('register/resetPassword'); //TODO: validate user, send email
+  },
+  resetPassword: async (req, res, next) => {
+    //TODO: validate email adress
+    if (req.skip) return next();
+    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+    const hash = await bcrypt.hash(req.body.password, salt);
+
+    await User.findOne({ email: req.body.email })
+      .then((user) => {
+        if(user){
+          //check that passwords are the same 
+          if(req.body.password === req.body.passwordRepeat){       
+                //replace current password with new one     
+                console.log("user: " + user)           
+                User.updateOne(
+                  { "_id": user.id },
+                  { $set: { "password": hash } }                  
+                );
+                console.log('hash: '+ hash); 
+                res.locals.redirect = `/register/signIn`;
+                req.flash(
+                  'success',
+                  `${user.email}'s password changed successfully!`//`${user.fullName}'s password changed successfully!`
+                );
+                res.locals.user = user;
+              next();
+          } else {
+              res.locals.redirect = '/register/resetPassword';              
+              req.flash(
+                'error',
+                'Enter the same password twice'
+              );
+              next();
+          }
+        }
+        else {
+          res.locals.redirect = '/register/resetPassword';
+          req.flash(
+            'error',
+            'Failed to change password: User account not found.'
+          );
+          next();
+        }
+      })
+      .catch((error) => {
+        console.log(`Error user cannot be found: ${error.message}`);
+        next(error);
+      });  
+  },
 
   validatePasswordHash: async (req, res, next) => {
     User.findOne({ email: req.body.email })
@@ -116,10 +167,10 @@ module.exports = {
   },
 
   authenticate: passport.authenticate('local', {
-    failureRedirect: '/register/singIn',
+    failureRedirect: '/register/signIn',
     successRedirect: '/Register/profile',
   }),
-
+  
   showProfile: (req, res) => {
     res.render('Register/profile');
   },

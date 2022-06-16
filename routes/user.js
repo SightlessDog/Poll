@@ -10,4 +10,6 @@ router.get("/signIn", userController.showSignInPage);
 router.post("/signIn", userController.validatePasswordHash, userController.authenticate);
 router.get("/resetPassword", userController.showResetPassword);
 router.get("/forgotPassword", userController.showForgotPassword);
+router.post("/forgotPassword", userController.sendMailForPasswordReset);
+router.post("/resetPassword", userController.resetPassword, userController.redirectView);
 module.exports = router;
