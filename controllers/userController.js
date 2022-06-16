@@ -116,7 +116,7 @@ module.exports = {
   },
 
   authenticate: passport.authenticate('local', {
-    failureRedirect: '/register/singIn',
+    failureRedirect: '/register/signIn',
     successRedirect: '/Register/profile',
   }),
 
