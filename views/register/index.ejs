@@ -1,32 +1,53 @@
-<link rel="stylesheet" href="css/app.css">
-<div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800 w-full h-200" style="cursor: auto; width: 400px;  margin-top: 50px; margin-bottom: 50px;">
-   
-      <div class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline">Welcome to Poller! It's your first time here?</div>
-      <h1 class="mb-8 text-3xl text-center dark:text-white">Sign up</h1>  
-        <form action="/Register/register" method="POST" class="mt-2 text-gray-600 dark:text-gray-300"></form>
-        <input 
-                        type="text"
-                        class="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="fullname"
-                        placeholder="Full Name" />
+<link rel="stylesheet" href="css/app.css" />
+<div
+  class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800 w-full h-200"
+  style="cursor: auto; width: 400px; margin-top: 50px; margin-bottom: 50px"
+>
+  <div
+    class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
+  >
+    Welcome to Poller! It's your first time here?
+  </div>
+  <h1 class="mb-8 text-3xl text-center dark:text-white">Sign up</h1>
+  <form
+    action="/Register/register"
+    method="POST"
+    class="mt-2 text-gray-600 dark:text-gray-300"
+  >
+    <input
+      type="text"
+      class="block border border-grey-light w-full p-3 rounded mb-4"
+      name="name"
+      placeholder="Full Name"
+    />
 
-                    <input 
-                        type="text"
-                        class="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="email"
-                        placeholder="Email" required/>
+    <input
+      type="text"
+      class="block border border-grey-light w-full p-3 rounded mb-4"
+      name="email"
+      placeholder="Email"
+      required
+    />
 
-                    <input 
-                        type="password"
-                        class="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="password"
-                        placeholder="Password" required/>
-                    <button
-                        type="submit"
-                        class="w-full text-center py-3 rounded bg-blue-700 text-white hover:bg-green-dark focus:outline-none my-1"
-                    >Create Account</button> 
-                </form>
-        <div>
-            <a href="/Register/signIn" class="text-blue-600 dark:text-blue-400 hover:underline">Already have an account? Sign in here! ⟶</a> 
-        </div>        
+    <input
+      type="password"
+      class="block border border-grey-light w-full p-3 rounded mb-4"
+      name="password"
+      placeholder="Password"
+      required
+    />
+    <button
+      type="submit"
+      class="w-full text-center py-3 rounded bg-blue-700 text-white hover:bg-green-dark focus:outline-none my-1"
+    >
+      Create Account
+    </button>
+  </form>
+  <div>
+    <a
+      href="/Register/signIn"
+      class="text-blue-600 dark:text-blue-400 hover:underline"
+      >Already have an account? Sign in here! ⟶</a
+    >
+  </div>
 </div>
