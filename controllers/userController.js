@@ -87,7 +87,7 @@ module.exports = {
               res.locals.redirect = `/`;
               req.flash(
                 'success',
-                `${user.fullName}'s logged in successfully!`
+                `${user.email}'s logged in successfully!`//`${user.fullName}'s logged in successfully!`
               );
               res.locals.user = user;
             } else {
