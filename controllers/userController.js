@@ -54,9 +54,6 @@ module.exports = {
 
     //generate a salt based on the work factor (default: 10)
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-
-    newUser.password = await bcrypt.hash(newUser.password, salt);
-
     //register the user and save in the database or throw an error if unsuccessful
     User.create({name: newUser.name, email: newUser.email, password: newUser.password}, (error, user) => {
       if (error) {
@@ -94,6 +91,8 @@ module.exports = {
               );
               res.locals.user = user;
             } else {
+              console.log(passwordsMatch)
+              console.log(req.body.password)
               req.flash(
                 'error',
                 'Failed to log in user account: Incorrect Password.'
