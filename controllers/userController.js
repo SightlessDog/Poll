@@ -61,7 +61,8 @@ module.exports = {
       if (user) {
         req.flash(
           'success',
-          `${user.fullName}'s account created successfully!`
+          `${user.email}'s account created successfully!`
+          //`${user.fullName}'s account created successfully!`
         );
         res.locals.redirect = '/';
         console.log('Successfully registered!');
