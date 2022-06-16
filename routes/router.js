@@ -9,6 +9,7 @@ const router = require('express').Router(),
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const connectFlash = require('connect-flash');
+const expressValidator = require('express-validator');
 
 router.use(cookieParser('wtat2022'));
 router.use(
@@ -22,6 +23,7 @@ router.use(
   })
 );
 router.use(connectFlash());
+router.use(expressValidator());
 router.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
   next();

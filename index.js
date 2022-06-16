@@ -7,7 +7,6 @@ const router = require('./routes/router');
 const passport = require('passport');
 const User = require('./models/user'); //needed functionality for passport to work
 const expressSession = require('express-session');
-const expressValidator = require('express-validator');
 
 app.use(
   expressSession({
@@ -60,7 +59,7 @@ app.use(
   })
 );
 app.use(express.json());
-router.use(expressValidator());
+
 
 app.use('/', router);
 app.use(errorController.respondNoResourceFound);

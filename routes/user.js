@@ -1,7 +1,7 @@
 "use strict";
 
-const router = require("express").Router(),
-    userController = require("../controllers/userController")
+const router = require("express").Router()
+const userController = require("../controllers/userController")
 
 router.post("/register", userController.validate, userController.createUser, userController.redirectView);
 router.get("/register", userController.showRegister);

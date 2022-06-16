@@ -57,7 +57,7 @@ module.exports = {
     newUser.password = await bcrypt.hash(newUser.password, salt);
 
     //register the user and save in the database or throw an error if unsuccessful
-    User.register(newUser, req.body.password, (error, user) => {
+    User.register(newUser, req.body.password, (user, error) => {
       if (user) {
         req.flash(
           'success',
