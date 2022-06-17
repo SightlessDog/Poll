@@ -82,7 +82,6 @@ module.exports = {
   },
   resetPassword: async (req, res, next) => {
     //TODO: validate email adress
-    if (req.skip) return next();
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
     const hash = await bcrypt.hash(req.body.password, salt);
 
@@ -92,12 +91,14 @@ module.exports = {
           //check that passwords are the same 
           if(req.body.password === req.body.passwordRepeat){       
                 //replace current password with new one     
-                console.log("user: " + user)           
+                console.log("user with old hash: " + user)       
+                console.log('new hash: '+ hash);     
+
                 User.updateOne(
-                  { "_id": user.id },
-                  { $set: { "password": hash } }                  
+                  { _id: user.id },
+                  { $set: { password: hash } }
                 );
-                console.log('hash: '+ hash); 
+              
                 res.locals.redirect = `/register/signIn`;
                 req.flash(
                   'success',
@@ -142,8 +143,7 @@ module.exports = {
               );
               res.locals.user = user;
             } else {
-              console.log(passwordsMatch)
-              console.log(req.body.password)
+              console.log("passwordMatch: " + passwordsMatch + " tried with password: " + req.body.password)
               req.flash(
                 'error',
                 'Failed to log in user account: Incorrect Password.'
