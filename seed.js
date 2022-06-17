@@ -54,22 +54,27 @@ var ongoingPolls = [
 
 var users = [
     {
+        name: "SightlessDog",
         email: "sightlessdog@poller.com",
         password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"  
     },
     {
+        name: "MrSchmoke",
         email: "mrschmoke@poller.com",
         password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"       
     },
     {
+        name: "MyMayu",
         email: "mymayu1@poller.com",
         password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"        
     },
     {
+        name: "Karmagedon",
         email: "karmagedon@poller.com",
         password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"
     },
     {
+        name: "Shirokonto",
         email: "shirokonto@poller.com",
         password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"    
     }
@@ -125,6 +130,7 @@ ongoingPolls.forEach((e) => {
 
 users.forEach((u) => {
     commands.push(Users.create({
+        name : u.name,
         email: u.email,
         password: u.password,
         polls: u.polls
