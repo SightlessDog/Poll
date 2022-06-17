@@ -77,6 +77,43 @@ module.exports = {
       } 
     });
   },
+  sendMailForPasswordReset: (req, res) => {
+    res.render('register/resetPassword'); //TODO: validate user, send email
+  },
+  resetPassword: async (req, res, next) => {
+    //TODO: validate email adress
+    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+    const hash = await bcrypt.hash(req.body.password, salt);
+
+    //check that passwords are the same
+
+    await User.findOneAndUpdate(
+        { email: req.body.email  },
+        { password: hash })
+      .then((user) => {
+          if(req.body.password === req.body.passwordRepeat){       
+                //replace current password with new one     
+                res.locals.redirect = `/register/signIn`;
+                req.flash(
+                  'success',
+                  `${user.email}'s password changed successfully!`//`${user.fullName}'s password changed successfully!`
+                );
+                res.locals.user = user;
+              next();
+          } else {
+              res.locals.redirect = '/register/resetPassword';              
+              req.flash(
+                'error',
+                'Enter the same password twice'
+              );
+              next();
+          }
+      })
+      .catch((error) => {
+        console.log(`Error user cannot be found: ${error.message}`);
+        next(error);
+      });  
+  },
 
   validatePasswordHash: async (req, res, next) => {
     User.findOne({ email: req.body.email })
@@ -91,8 +128,7 @@ module.exports = {
               );
               res.locals.user = user;
             } else {
-              console.log(passwordsMatch)
-              console.log(req.body.password)
+              console.log("passwordMatch: " + passwordsMatch + " tried with password: " + req.body.password)
               req.flash(
                 'error',
                 'Failed to log in user account: Incorrect Password.'
@@ -120,7 +156,7 @@ module.exports = {
     failureRedirect: '/register/signIn',
     successRedirect: '/Register/profile',
   }),
-
+  
   showProfile: (req, res) => {
     res.render('Register/profile');
   },
