@@ -85,19 +85,16 @@ module.exports = {
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
     const hash = await bcrypt.hash(req.body.password, salt);
 
-    await User.findOne({ email: req.body.email })
+    await User.findOneAndUpdate(
+        { email: req.body.email  },
+        { password: hash })
       .then((user) => {
         if(user){
           //check that passwords are the same 
           if(req.body.password === req.body.passwordRepeat){       
                 //replace current password with new one     
                 console.log("user with old hash: " + user)       
-                console.log('new hash: '+ hash);     
-
-                User.updateOne(
-                  { _id: user.id },
-                  { $set: { password: hash } }
-                );
+                console.log('new hash: '+ hash);
               
                 res.locals.redirect = `/register/signIn`;
                 req.flash(
