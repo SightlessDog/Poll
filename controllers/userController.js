@@ -6,6 +6,7 @@ const { body, validationResult } = require('express-validator');
 
 const getUserInfo = (body) => {
   return {
+    name: body.name,
     email: body.email,
     password: body.password,
   };
@@ -53,11 +54,17 @@ module.exports = {
 
     //generate a salt based on the work factor (default: 10)
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-
-    newUser.password = await bcrypt.hash(newUser.password, salt);
-
     //register the user and save in the database or throw an error if unsuccessful
-    User.register(newUser, req.body.password, (user, error) => {
+    User.create({name: newUser.name, email: newUser.email, password: newUser.password}, (error, user) => {
+      if (error) {
+        res.locals.redirect = '/Register/index';
+        req.flash(
+          'error',
+          `Failed to create user account because: ${error.message}.`
+        );
+        console.log('Unsuccessful registration!');
+        next();
+      }
       if (user) {
         req.flash(
           'success',
@@ -67,15 +74,7 @@ module.exports = {
         res.locals.redirect = '/';
         console.log('Successfully registered!');
         next();
-      } else {
-        res.locals.redirect = '/Register/index';
-        req.flash(
-          'error',
-          `Failed to create user account because: ${error.message}.`
-        );
-        console.log('Unsuccessful registration!');
-        next();
-      }
+      } 
     });
   },
   sendMailForPasswordReset: (req, res) => {
@@ -143,6 +142,8 @@ module.exports = {
               );
               res.locals.user = user;
             } else {
+              console.log(passwordsMatch)
+              console.log(req.body.password)
               req.flash(
                 'error',
                 'Failed to log in user account: Incorrect Password.'

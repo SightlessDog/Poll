@@ -1,22 +1,14 @@
-const mongoose = require('mongoose'),
-  { Schema } = require('mongoose'),
-  passportLocalMongoose = require('passport-local-mongoose');
+const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
-  // name:{
-  //     first:{
-  //         type: String,
-  //         trim:true,
-  //         required: true           // will be needed later
-  //     },
-  //     last:{
-  //         type: String,
-  //         trim:true,
-  //         required: true
-  //     }
-  // },
+  name : {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true,
@@ -27,10 +19,6 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-});
-
-userSchema.virtual('fullName').get(function () {
-  return `${this.name.first} ${this.name.last}`;
 });
 
 userSchema.plugin(passportLocalMongoose, {
