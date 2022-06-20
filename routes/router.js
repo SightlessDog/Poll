@@ -4,7 +4,8 @@ const router = require('express').Router(),
   userRoutes = require('./user'),
   singlePollRoutes = require('./singlePoll'),
   pollsRoutes = require('./polls'),
-  profileRoutes = require('./profile');
+  profileRoutes = require('./profile'),
+  homeController = require("../controllers/homeController");
 
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -26,6 +27,8 @@ router.use(connectFlash());
 router.use(expressValidator());
 router.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
+  res.locals.loggedIn = req.isAuthenticated();
+  res.locals.currentUser = req.user;
   next();
 });
 
@@ -33,11 +36,6 @@ router.use('/register', userRoutes);
 router.use('/profile', profileRoutes);
 router.use('/singlePoll', singlePollRoutes);
 router.use('/polls', pollsRoutes);
-router.use('/', (req, res) => {
-  res.locals.flashMessages = req.flash();
-  res.render('index');
-});
-
-
+router.use('/', homeController.showHome);
 
 module.exports = router;
