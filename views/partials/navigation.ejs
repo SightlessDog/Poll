@@ -27,14 +27,19 @@
               >Polls</a
             >
 
-            <a
+            <% if (loggedIn) { %>              
+              <a href="<%= `/register/logout/` %>" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Log out</a>
+            <%} else {%>
+              <a
               href="/Register/register"
               class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >Register</a
             >
+            <% } %>
+            
           </div>
         </div>
-      </div>
+      </div>     
       <div
         class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
       >
@@ -76,9 +81,12 @@
                 alt=""
               />
             </button>
-          </a>
-          </div>
+          </a>          
+          </div>          
         </div>
+        <% if (loggedIn) { %>              
+          <div class="text-gray-300 px-3 py-2 rounded-md text-sm font-medium"><%= currentUser.name %></div>
+        <% } %>
         </div>
       </div>
     </div>

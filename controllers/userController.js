@@ -52,29 +52,19 @@ module.exports = {
     //get user credentials, store them in "newUser"
     let newUser = new User(getUserInfo(req.body));
 
-    //generate a salt based on the work factor (default: 10)
-    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-    //register the user and save in the database or throw an error if unsuccessful
-    User.create({name: newUser.name, email: newUser.email, password: newUser.password}, (error, user) => {
-      if (error) {
-        res.locals.redirect = '/Register/index';
+    User.register(newUser, req.body.password, (error, user) => {
+      if(user) {
         req.flash(
-          'error',
-          `Failed to create user account because: ${error.message}.`
+          'success', `${user.name}'s account created successfully!`
         );
-        console.log('Unsuccessful registration!');
-        next();
-      }
-      if (user) {
-        req.flash(
-          'success',
-          `${user.email}'s account created successfully!`
-          //`${user.fullName}'s account created successfully!`
-        );
-        res.locals.redirect = '/';
+        res.locals.redirect = '/Register/profile';
         console.log('Successfully registered!');
         next();
-      } 
+      } else {
+        req.flash("error", `Failed to create user account because: ${error.message}.`);
+        res.locals.redirect = "/Register/signIn";
+        next();
+      }
     });
   },
   sendMailForPasswordReset: (req, res) => {
@@ -114,49 +104,18 @@ module.exports = {
         next(error);
       });  
   },
-
-  validatePasswordHash: async (req, res, next) => {
-    User.findOne({ email: req.body.email })
-      .then((user) => {
-        if (user) {
-          user.passwordComparison(req.body.password).then((passwordsMatch) => {
-            if (passwordsMatch) {
-              res.locals.redirect = `/`;
-              req.flash(
-                'success',
-                `${user.email}'s logged in successfully!`//`${user.fullName}'s logged in successfully!`
-              );
-              res.locals.user = user;
-            } else {
-              console.log("passwordMatch: " + passwordsMatch + " tried with password: " + req.body.password)
-              req.flash(
-                'error',
-                'Failed to log in user account: Incorrect Password.'
-              );
-              res.locals.redirect = '/register/signIn';
-            }
-            next();
-          });
-        } else {
-          res.locals.redirect = '/register/signIn';
-          req.flash(
-            'error',
-            'Failed to log in user account: User account not found.'
-          );
-          next();
-        }
-      })
-      .catch((error) => {
-        console.log(`Error logging in user: ${error.message}`);
-        next(error);
-      });
-  },
-
   authenticate: passport.authenticate('local', {
     failureRedirect: '/register/signIn',
+    failureFlash: "Failed to login.",
     successRedirect: '/Register/profile',
+    successFlash: "Logged in!"
   }),
-  
+  logout: (req, res, next) => {
+    req.logout();
+    req.flash("success", "You have been logged out!");
+    res.locals.redirect = "/index";
+    next();
+  },
   showProfile: (req, res) => {
     res.render('Register/profile');
   },

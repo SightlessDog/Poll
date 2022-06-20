@@ -7,7 +7,8 @@ router.post("/register", userController.validate, userController.createUser, use
 router.get("/register", userController.showRegister);
 router.get("/profile", userController.showProfile);
 router.get("/signIn", userController.showSignInPage);
-router.post("/signIn", userController.validatePasswordHash, userController.authenticate);
+router.post("/signIn", userController.authenticate);
+router.get("/logout", userController.logout, userController.redirectView);
 router.get("/resetPassword", userController.showResetPassword);
 router.get("/forgotPassword", userController.showForgotPassword);
 router.post("/forgotPassword", userController.sendMailForPasswordReset);

@@ -23,11 +23,6 @@ app.use(passport.session());
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.use((req, res, next) => {
-  res.locals.loggedIn = req.isAuthenticated();
-  res.locals.currentUser = req.user;
-  next();
-});
 let dburl = 'mongodb://127.0.0.1:27017/mongodb-poll';
 mongoose.connect(dburl, { useNewUrlParser: true });
 const db = mongoose.connection;
