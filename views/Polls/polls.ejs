@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/app.css">
 <div class="flex flex-col w-screen  justify-center items-center">
 <div class="mt-4 px-2">
-  <div class="max-w-2xl">Create a poll: </div>
+  <h1 class="text-2xl font-bold text-gray-800">Create a poll: </h1>
   <form class="bg-white w-80 h-30 rounded-md shadow-lg mt-4 px-4 py-4" id="pollForm" action="/singlePoll" method="POST">
     <div class="relative z-0 w-full mb-6 group">
       <input type="text" name="title" required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
@@ -32,8 +32,8 @@
     <button type="submit" class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
   </form>
 </div>
-
-<h1 class="mt-4">Ongoing Polls</h1>
+</br>
+<h1 class="text-2xl font-bold text-gray-800">Ongoing Polls</h1>
 </br>
 <div id="polls-container">
 <% let openPolls = polls.filter(poll => poll.closed == false); %>
@@ -55,7 +55,7 @@
 </div>
 </br>
 
-<h1>Closed Polls</h1>
+<h1 class="text-2xl font-bold text-gray-800">Closed Polls</h1>
 </br>
 <div id="polls-container">
   <% let closedPolls = polls.filter(poll => poll.closed == true); %>
