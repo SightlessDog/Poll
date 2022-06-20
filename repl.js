@@ -41,10 +41,7 @@ Poll.create({
 var testUser;
 
 User.create({
-    name: {
-        first: "Peter",
-        last: "Parker"
-    },
+    name: "Peter Parker",
     email: "peter@spiderman.com",
     password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"
 })
