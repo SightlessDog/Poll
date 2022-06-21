@@ -11,14 +11,24 @@ module.exports = {
         })
     },
     postVote : (req, res) => {
+        const currentUser = res.locals.currentUser;
         const id = req.params.id;
+        let msgText = "";
         Poll.findById(id).exec().then(re => {
-            User.findOne({email: "jon@jonwexler.com"}).exec().then(r => {
-                re.options.find(el => el.name === req.body.option ? el.votes += 1 : null);
+            User.findOne({email: currentUser.email}).exec().then(r => {
+                re.options.find(votedOption => votedOption.name === req.body.option ? votedOption.votes += 1 : null);
                 if (!re.participants.includes(r._id)) {
                     re.participants.push(r._id);
                 }                 
-                re.save().then(r => res.render("Thanks/thanks"));
+                re.save((error, savedDoc) => {                    
+                    req.flash(
+                        'success', `Thanks for your vote for  ${req.body.option}!`
+                    );
+                    res.locals.redirect = `/poll/${id}`;
+                    res.locals.poll = savedDoc;
+                    res.render("SinglePoll/singlePoll", {poll: savedDoc, notification : msgText});              
+                    if (error) console.log(error);
+                })
             });
         })
     },
