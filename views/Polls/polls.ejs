@@ -1,83 +1,4 @@
 <link rel="stylesheet" href="css/app.css">
-<div class="flex flex-col w-screen  justify-center items-center">
-<div class="mt-4 px-2">
-  <h1 class="text-2xl font-bold text-gray-800">Create a poll: </h1>
-  <form class="bg-white w-80 h-30 rounded-md shadow-lg mt-4 px-4 py-4" id="pollForm" action="/singlePoll" method="POST">
-    <div class="relative z-0 w-full mb-6 group">
-      <input type="text" name="title" required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-      <label for="title" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Title</label>
-    </div>
-    <div class="relative z-0 w-full mb-6 group">
-      <input type="text" name="description" required id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-      <label for="description" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
-    </div>
-    <div class="relative z-0 w-full mb-6 group">
-      <input type="date" name="date" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-      <label for="date" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date</label>
-    </div>
-    <div class="grid xl:grid-cols-2 xl:gap-6" id="multipleOptions">
-      <div class="relative z-0 w-full mb-6 group">
-        <input type="text" name="options" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-        <label for="options" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Option</label>
-      </div>
-      <div class="relative z-0 w-full mb-6 group">
-        <input type="text" name="options" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-        <label for="options"class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Second Option</label>
-      </div>
-    </div>
-    <div class="grid xl:grid-cols-2 xl:gap-6">
-      <input type="button" value="Add option" onclick="addOptionField()" name="additionalOption" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
-      <input type="button" value="Remove option" onclick="removeLastOptionField()" name="removeLastOption" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
-    </div>
-    <button type="submit" class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-  </form>
-</div>
-</br>
-<h1 class="text-2xl font-bold text-gray-800">Ongoing Polls</h1>
-</br>
-<div id="polls-container">
-<% let openPolls = polls.filter(poll => poll.closed == false); %>
-<% openPolls.forEach(poll => { %>
-    <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= poll.createdDate.toUTCString() %> </span> 
-          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= poll.participants.length %></a>
-        </div> 
-        <div class="mt-2">
-          <a href="/singlePoll/<%= poll._id %>" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= poll.title %></a> 
-          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= poll.description %></p>
-        </div> 
-        <div class="flex items-center justify-between mt-4">
-          <a href="/singlePoll/<%= poll._id %>" class="text-blue-600 dark:text-blue-400 hover:underline">Vote ⟶</a> 
-        </div>
-    </div>
-<% }); %>
-</div>
-</br>
-
-<h1 class="text-2xl font-bold text-gray-800">Closed Polls</h1>
-</br>
-<div id="polls-container">
-  <% let closedPolls = polls.filter(poll => poll.closed == true); %>
-  <% closedPolls.forEach( poll => {%>
-      <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= poll.createdDate.toUTCString() %> </span> 
-          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= poll.participants.length %></a>
-        </div> 
-        <div class="mt-2">
-          <a href="/singlePoll/<%= poll._id %>/closed" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= poll.title %></a> 
-          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= poll.description %></p>
-        </div> 
-        <div class="flex items-center justify-between mt-4">
-          <a href="/singlePoll/closed/<%= poll._id %>/closed" class="text-blue-600 dark:text-blue-400 hover:underline">See Result ⟶</a> 
-        </div>
-    </div>
-    <% }); %>
-    
-  </div>
-</div>
-
 <script type="text/javascript">
   const addedOptions = [];
   function addOptionField() {
@@ -105,4 +26,85 @@
   function removeLastOptionField() {
     if(document.getElementById("multipleOptions").childElementCount>2) document.getElementById("multipleOptions").removeChild(document.getElementById("multipleOptions").lastChild);    
   }
+
+
 </script>
+<div class="biggestContainer flex flex-col w-screen justify-center items-center">
+<div class="mt-4 px-2">
+  <h1 class="text-2xl font-bold text-gray-800">Create a poll: </h1>
+  <form class="bg-white w-80 h-30 rounded-md shadow-lg mt-4 px-4 py-4" id="pollForm" action="/singlePoll" method="POST">
+    <div class="relative z-0 w-full mb-6 group">
+      <input type="text" name="title" required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+      <label for="title" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Title</label>
+    </div>
+    <div class="relative z-0 w-full mb-6 group">
+      <input type="text" name="description" required id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+      <label for="description" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
+    </div>
+    <div class="relative z-0 w-full mb-6 group">
+      <input type="date" name="deadline" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+      <label for="deadline" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Deadline</label>
+    </div>
+    <div class="grid xl:grid-cols-2 xl:gap-6" id="multipleOptions">
+      <div class="relative z-0 w-full mb-6 group">
+        <input type="text" name="options" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+        <label for="options" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Option</label>
+      </div>
+      <div class="relative z-0 w-full mb-6 group">
+        <input type="text" name="options" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+        <label for="options"class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Second Option</label>
+      </div>
+    </div>
+    <div class="grid xl:grid-cols-2 xl:gap-6">
+      <input type="button" value="Add option" onclick="addOptionField()" name="additionalOption" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
+      <input type="button" value="Remove option" onclick="removeLastOptionField()" name="removeLastOption" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
+    </div>
+    <button type="submit" class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+  </form>
+</div>
+</br>
+<h1 class="text-2xl font-bold text-gray-800">Ongoing Polls</h1>
+</br>
+<div id="polls-container">
+<% let openPolls = polls.filter(poll => poll.closed == false); %>
+<% openPolls.forEach(poll => { %>
+    <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= getDate(poll.deadline) %> </span>
+          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= poll.participants.length %></a>
+        </div> 
+        <div class="mt-2">
+          <a href="/singlePoll/<%= poll._id %>" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= poll.title %></a> 
+          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= poll.description %></p>
+        </div> 
+        <div class="flex items-center justify-between mt-4">
+          <a href="/singlePoll/<%= poll._id %>" class="text-blue-600 dark:text-blue-400 hover:underline">Vote ⟶</a> 
+        </div>
+    </div>
+<% }); %>
+</div>
+</br>
+
+<h1 class="text-2xl font-bold text-gray-800">Closed Polls</h1>
+</br>
+<div id="polls-container">
+  <% let closedPolls = polls.filter(poll => poll.closed == true); %>
+  <% closedPolls.forEach( poll => {%>
+      <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px;">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-light text-gray-600 dark:text-gray-400"><%= poll.deadline.toUTCString() %> </span>
+          <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"><%= poll.participants.length %></a>
+        </div> 
+        <div class="mt-2">
+          <a href="/singlePoll/<%= poll._id %>/closed" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"><%= poll.title %></a> 
+          <p class="mt-2 text-gray-600 dark:text-gray-300"><%= poll.description %></p>
+        </div> 
+        <div class="flex items-center justify-between mt-4">
+          <a href="/singlePoll/closed/<%= poll._id %>/closed" class="text-blue-600 dark:text-blue-400 hover:underline">See Result ⟶</a> 
+        </div>
+    </div>
+    <% }); %>
+    
+  </div>
+</div>
+

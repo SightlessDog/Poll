@@ -34,6 +34,7 @@ module.exports = {
             closedDate: req.body.date,
             options : optionsPair,
             participants : [],
+            deadline: req.body.deadline,
             closed: false
         })
         createdPoll.save((error, savedDoc) => {
@@ -102,15 +103,16 @@ module.exports = {
     showEditPage : (req, res) => {
         let id = req.params.id;
         Poll.findById(id).exec().then(re => {
-            console.log(re)
-            res.render("SinglePoll/editPoll", {poll: re, date: re.createdDate.getFullYear() + "-" + (re.createdDate.getMonth() >= 10 ? re.createdDate.getMonth() + 1 : "0"+(re.createdDate.getMonth() + 1))
-             + "-" + (re.createdDate.getDate() >= 10 ? re.createdDate.getDate() : "0" +(re.createdDate.getDate()))})
+            //console.log(re)
+            res.render("SinglePoll/editPoll", {poll: re, deadline: re.deadline.getFullYear() + "-" + (re.deadline.getMonth() >= 10 ? re.deadline.getMonth() + 1 : "0"+(re.deadline.getMonth() + 1))
+             + "-" + (re.deadline.getDate() >= 10 ? re.deadline.getDate() : "0" +(re.deadline.getDate()))})
         })
     },
     updatePoll : (req, res, next) => {
         let id = req.params.id;
         let optionsPair = [];
         let msgText = "";
+
         Poll.findById(id).then(poll => {
             for (let i = 0; i<req.body.options.length; i++ ) {
                 if (req.body.options[i] === poll.options[i].name) {
@@ -122,13 +124,14 @@ module.exports = {
             let pollParams = {
                 title: req.body.title,
                 description: req.body.description,
-                date: req.body.date,
+                deadline: req.body.deadline,
                 options : optionsPair,
             } 
             Poll.findByIdAndUpdate(id, {
                 $set: pollParams
-            }).then(e => {
-                res.locals.redirect = `/poll/${id}`
+            }).then(poll => {
+                res.locals.redirect = `/poll/${id}`;
+                res.locals.poll = poll;
                 Poll.findById(id).then(newPoll => {
                     res.render("SinglePoll/singlePoll", {poll: newPoll, notification : msgText});
                 })
