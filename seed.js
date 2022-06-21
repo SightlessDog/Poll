@@ -10,6 +10,9 @@ mongoose.connect(
 );
 mongoose.connection;
 
+var currentDate = new Date();
+var sevenDaysLater = currentDate.setDate(currentDate.getDate() + 7);
+
 var ongoingPolls = [
     {
         title: "Whatever",
@@ -21,6 +24,7 @@ var ongoingPolls = [
             {name: "Yes", votes: 0}, 
             {name: "No", votes: 0}
         ],
+        deadline: sevenDaysLater,
         closed: false
     },
     {
@@ -34,6 +38,7 @@ var ongoingPolls = [
             {name: "Spiderman", votes: 0}, 
             {name: "Watchmen", votes: 0}
         ],
+        deadline: sevenDaysLater,
         closed: false
     },
     {
@@ -48,6 +53,7 @@ var ongoingPolls = [
             {name: "Tomato", votes: 0}, 
             {name: "Strawberry", votes: 0}
         ],
+        deadline: sevenDaysLater,
         closed: false
     }
 ];
@@ -87,6 +93,7 @@ var closedPolls = [
             {name: "Hollow Knight", votes: 8},
             {name: "Hollow Kniffght", votes: 6}
         ],
+        deadline: sevenDaysLater,
         closed: true
     },
     {
@@ -100,6 +107,7 @@ var closedPolls = [
             {name: "Saturday", votes: 3}, 
             {name: "Sunday", votes: 4}
         ],
+        deadline: sevenDaysLater,
         closed: true
     }
 ];
@@ -119,6 +127,7 @@ ongoingPolls.forEach((e) => {
         createdDate: e.createdDate,
         options: e.options,
         participants: e.participants,
+        deadline: e.deadline,
         closed: e.closed
     }));
 })
@@ -139,6 +148,7 @@ closedPolls.forEach((c) => {
         closedDate: c.closedDate,
         options: c.options,
         participants: c.participants,
+        deadline: c.deadline,
         closed: c.closed
     }));
 })

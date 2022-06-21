@@ -26,6 +26,7 @@ Poll.create({
         name: "How about no?",
         votes: 2
     }],
+    deadline: Date.now(),
     closed: false
 }).then(poll => {
     testPoll = poll;

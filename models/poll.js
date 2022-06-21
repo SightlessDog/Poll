@@ -10,7 +10,7 @@ const pollSchema = mongoose.Schema({
     },
     description: String,
     createdDate: {
-        type: Date, 
+        type: Date,
         required: true,
     },
     closedDate: {
@@ -24,6 +24,9 @@ const pollSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
+    deadline: {
+        type: Date
+    },
     closed: {
         type: Boolean,
         required: true
@@ -36,6 +39,7 @@ pollSchema.methods.getOngoingPollInfo = function() {
             CreationDate:  ${this.createdDate}
             Participants: ${this.participants}
             Options: ${this.options}
+            Deadline: ${this.deadline}
             Closed: ${this.closed}`;
 };
 
