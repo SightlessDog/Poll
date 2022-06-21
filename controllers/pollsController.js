@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Poll = require("../models/poll");
+const passport = require('passport'); 
 
 let polls;
 
@@ -11,15 +12,24 @@ const getDate = date => {
       (dateObj.getUTCMonth() + 1 < 10 ? '0' : '') + (dateObj.getUTCMonth() + 1);
     const day = (dateObj.getUTCDate() < 10 ? '0' : '') + dateObj.getUTCDate();
     const year = dateObj.getUTCFullYear();
-    // const hours = (dateObj.getUTCHours() < 10 ? '0' : '') + dateObj.getUTCHours();
-    // const minutes =
-    //   (dateObj.getUTCMinutes() < 10 ? '0' : '') + dateObj.getUTCMinutes();
-
     return "Deadline: " + month + '.' + day + '.' + year;
   };
 
 module.exports = {
+    authenticate: passport.authenticate('local', {
+        failureRedirect: '/register/signIn',
+        failureFlash: "Failed to login.",
+        successRedirect: 'Polls/polls',
+        successFlash: "Logged in!"
+    }),
     showPolls : (req, res) => {
+        /*passport.authenticate('local', {
+            failureRedirect: '/register/signIn',
+            failureFlash: "Failed to login.",
+            successRedirect: 'Polls/polls',
+            successFlash: "Logged in!"
+        }),*/
+
         Poll.find({}).exec()           //return promise from find query
             .then((polls) =>{          //send data to next codeblock
                 res.render("Polls/polls", {  
@@ -33,6 +43,5 @@ module.exports = {
             .then(() => {
                 console.log("Polls: Promise complete");
             });
-
     }
 }

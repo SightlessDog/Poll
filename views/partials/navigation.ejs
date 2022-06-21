@@ -20,14 +20,12 @@
               class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >Home</a
             >
-
-            <a
-              href="/polls"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >Polls</a
-            >
-
-            <% if (loggedIn) { %>              
+            <% if (loggedIn) { %>
+              <a
+                href="/polls"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >Polls</a
+              >             
               <a href="<%= `/register/logout/` %>" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Log out</a>
             <%} else {%>
               <a
@@ -35,8 +33,7 @@
               class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >Register</a
             >
-            <% } %>
-            
+            <% } %>            
           </div>
         </div>
       </div>     
