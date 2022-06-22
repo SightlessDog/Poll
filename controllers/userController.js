@@ -26,7 +26,7 @@ module.exports = {
       res.redirect(redirectPath);
     } else next();
   },
-  validate: (req, res, next) => {
+  validate: (req, res, next) =>{ 
     req
       .sanitizeBody('email')
       .normalizeEmail({
@@ -57,11 +57,11 @@ module.exports = {
         req.flash(
           'success', `${user.name}'s account created successfully!`
         );
-        res.locals.redirect = '/Register/profile';
+        res.locals.redirect = '/Register/signIn';
         next();
       } else {
         req.flash("error", `Failed to create user account because: ${error.message}.`);
-        res.locals.redirect = "/Register/signIn";
+        res.locals.redirect = "/Register/register";
         next();
       }
     });
