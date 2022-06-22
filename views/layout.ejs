@@ -1,7 +1,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <body>   
         <% if (flashMessages) { %>
-            
             <% if (flashMessages.success) { %>
                 <div class="flashes absolute top-20 right-10 w-52 p-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
                     <div class="flash success block sm:inline"><%= flashMessages.success %></div>
