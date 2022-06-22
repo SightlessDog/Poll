@@ -26,7 +26,7 @@ var ongoingPolls = [
         ],
         deadline: sevenDaysLater,
         closed: false, 
-        creator: {}
+        creator: mongoose.Types.ObjectId()
     },
     {
         title: "Cinema",
@@ -41,7 +41,7 @@ var ongoingPolls = [
         ],
         deadline: sevenDaysLater,
         closed: false,
-        creator: {}
+        creator: mongoose.Types.ObjectId()
     },
     {
         title: "Fruits",
@@ -57,7 +57,7 @@ var ongoingPolls = [
         ],
         deadline: sevenDaysLater,
         closed: false,
-        creator: {}
+        creator: mongoose.Types.ObjectId()
     }
 ];
 
@@ -103,7 +103,7 @@ var closedPolls = [
         ],
         deadline: sevenDaysLater,
         closed: true,
-        creator: {}
+        creator: mongoose.Types.ObjectId()
     },
     {
         title: "Volleyball Day",
@@ -118,7 +118,7 @@ var closedPolls = [
         ],
         deadline: sevenDaysLater,
         closed: true,
-        creator: {}
+        creator: mongoose.Types.ObjectId()
     }
 ];
 
