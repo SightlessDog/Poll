@@ -25,7 +25,8 @@ var ongoingPolls = [
             {name: "No", votes: 0}
         ],
         deadline: sevenDaysLater,
-        closed: false
+        closed: false, 
+        creator: {}
     },
     {
         title: "Cinema",
@@ -39,7 +40,8 @@ var ongoingPolls = [
             {name: "Watchmen", votes: 0}
         ],
         deadline: sevenDaysLater,
-        closed: false
+        closed: false,
+        creator: {}
     },
     {
         title: "Fruits",
@@ -54,7 +56,8 @@ var ongoingPolls = [
             {name: "Strawberry", votes: 0}
         ],
         deadline: sevenDaysLater,
-        closed: false
+        closed: false,
+        creator: {}
     }
 ];
 
@@ -99,7 +102,8 @@ var closedPolls = [
             {name: "Hollow Kniffght", votes: 6}
         ],
         deadline: sevenDaysLater,
-        closed: true
+        closed: true,
+        creator: {}
     },
     {
         title: "Volleyball Day",
@@ -113,7 +117,8 @@ var closedPolls = [
             {name: "Sunday", votes: 4}
         ],
         deadline: sevenDaysLater,
-        closed: true
+        closed: true,
+        creator: {}
     }
 ];
 
@@ -133,7 +138,8 @@ ongoingPolls.forEach((e) => {
         options: e.options,
         participants: e.participants,
         deadline: e.deadline,
-        closed: e.closed
+        closed: e.closed,
+        creator: e.creator 
     }));
 })
 
@@ -155,7 +161,8 @@ closedPolls.forEach((c) => {
         options: c.options,
         participants: c.participants,
         deadline: c.deadline,
-        closed: c.closed
+        closed: c.closed,
+        creator: c.creator
     }));
 })
 
