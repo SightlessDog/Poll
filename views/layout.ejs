@@ -1,15 +1,21 @@
 <script src="https://cdn.tailwindcss.com"></script>
-<body>   
-    <div class="flashes">
-        <% if (flashMessages) { %>
-            <% if (flashMessages.success) { %>
-                <div class="flash success"><%= flashMessages.success %></div>
-            <% } else if (flashMessages.error) { %>
-                <div class="flash error"><%= flashMessages.error %></div>
-            <% } %>
-       <% } %>
+<body>
+  <% if (flashMessages) { %> <% if (flashMessages.success) { %>
+  <div
+    class="flashes absolute top-20 right-10 w-auto p-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800"
+    role="alert"
+  >
+    <div class="flash success block sm:inline">
+      <%= flashMessages.success %>
     </div>
-    <%- include('Partials/navigation.ejs') %>
-    <%- body %>
+  </div>
+  <% } else if (flashMessages.error) { %>
+  <div
+    class="bg-red-100 absolute top-20 right-10 w-auto border border-red-400 text-red-700 px-4 py-3 rounded"
+    role="alert"
+  >
+    <div class="flash error block sm:inline"><%= flashMessages.error %></div>
+  </div>
+  <% } %> <% } %> <%- include('Partials/navigation.ejs') %> <%- body %>
 </body>
 <%- include('Partials/footer.ejs') %>

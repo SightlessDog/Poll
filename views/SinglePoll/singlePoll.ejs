@@ -29,6 +29,7 @@
         <% } %> 
         </div> 
     </div>
+    <% if (currentUser._id.toString() === poll.creator.toString()) { %> 
     <div class="px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 400px; margin-top: 50px; margin-bottom: 50px;">
         <div class="text-white" for="addOption" data-toggle="tooltip" data-placement="left" title="This is only visible for your as poll maker"><b>Only visible for Pollmaker:</b></div> 
     </br>
@@ -43,3 +44,4 @@
         <% } %>
         
     </div>
+    <% } %>

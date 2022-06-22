@@ -31,19 +31,6 @@ db.once('open', () => {
   console.log('Successfully connected to MongoDB using Mongoose!');
 });
 
-/*User.create({
-  name: {
-    first: 'Jon',
-    last: 'Wexler ',
-  },
-  email: 'jon@jonwexler.com',
-  password: 'pass123',
-})
-  .then((user) => {
-    console.log('User created');
-  })
-  .catch((error) => console.log(error.message));*/
-
 app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 3000);
 app.use(layouts);

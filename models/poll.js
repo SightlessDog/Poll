@@ -11,7 +11,6 @@ const pollSchema = mongoose.Schema({
     description: String,
     createdDate: {
         type: Date,
-        required: true,
     },
     closedDate: {
         type: Date
@@ -24,6 +23,10 @@ const pollSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
     deadline: {
         type: Date
     },

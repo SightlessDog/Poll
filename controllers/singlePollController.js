@@ -33,6 +33,7 @@ module.exports = {
         })
     },
     createPoll : (req, res, next) => {
+        console.log(req.user)
         const optionsPair = [];
         req.body.options.forEach(option => {
             optionsPair.push({name: option, votes: 0});
@@ -45,7 +46,8 @@ module.exports = {
             options : optionsPair,
             participants : [],
             deadline: req.body.deadline,
-            closed: false
+            closed: false,
+            creator: req.user._id
         })
         createdPoll.save((error, savedDoc) => {
             let msgText = ""

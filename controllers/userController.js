@@ -26,7 +26,7 @@ module.exports = {
       res.redirect(redirectPath);
     } else next();
   },
-  validate: (req, res, next) => {
+  validate: (req, res, next) =>{ 
     req
       .sanitizeBody('email')
       .normalizeEmail({
@@ -49,7 +49,7 @@ module.exports = {
   },
   createUser: async (req, res, next) => {
     if (req.skip) return next();
-    //get user credentials, store them in "newUser"
+    
     let newUser = new User(getUserInfo(req.body));
 
     User.register(newUser, req.body.password, (error, user) => {
@@ -57,12 +57,11 @@ module.exports = {
         req.flash(
           'success', `${user.name}'s account created successfully!`
         );
-        res.locals.redirect = '/Register/profile';
-        console.log('Successfully registered!');
+        res.locals.redirect = '/Register/signIn';
         next();
       } else {
         req.flash("error", `Failed to create user account because: ${error.message}.`);
-        res.locals.redirect = "/Register/signIn";
+        res.locals.redirect = "/Register/register";
         next();
       }
     });
@@ -86,7 +85,7 @@ module.exports = {
                 res.locals.redirect = `/register/signIn`;
                 req.flash(
                   'success',
-                  `${user.email}'s password changed successfully!`//`${user.fullName}'s password changed successfully!`
+                  `${user.email}'s password changed successfully!`
                 );
                 res.locals.user = user;
               next();
