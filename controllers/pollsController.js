@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Poll = require("../models/poll");
 const passport = require('passport'); 
 
-let polls;
-
-Poll.find({}, (err, res) => polls = res);
-
 const getDate = date => {
     const dateObj = new Date(date);
     const month =
@@ -23,13 +19,6 @@ module.exports = {
         successFlash: "Logged in!"
     }),
     showPolls : (req, res) => {
-        /*passport.authenticate('local', {
-            failureRedirect: '/register/signIn',
-            failureFlash: "Failed to login.",
-            successRedirect: 'Polls/polls',
-            successFlash: "Logged in!"
-        }),*/
-
         Poll.find({}).exec()           //return promise from find query
             .then((polls) =>{          //send data to next codeblock
                 res.render("Polls/polls", {  
@@ -40,8 +29,5 @@ module.exports = {
                 console.log(error.message);
                 return [];
             })                          //catch rejected errors that are rejected in promise
-            .then(() => {
-                console.log("Polls: Promise complete");
-            });
     }
 }
