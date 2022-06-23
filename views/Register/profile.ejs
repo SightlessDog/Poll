@@ -1,5 +1,5 @@
 <% if (loggedIn) { %>
-<div class="px-3 py-3 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 1000px; height: 550px; margin-top: 50px; margin-bottom: 100px;">
+<div class="px-3 py-3 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800" style="cursor: auto; width: 1000px; height: 400px; margin-top: 50px; margin-bottom: 100px;">
     <div class="px-4 py-5 sm:px-6">
       <h2 class="text-lg leading-6 font-medium text-gray-200">Profile</h2>
       <p class="mt-1 max-w-2xl text-sm text-gray-100"><%= currentUser.name %></p>
@@ -15,13 +15,13 @@
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
               <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"> 
-                Get Most Recent Votes From This Week               
+                your votes              
             </ul>
           </dd>
         </div>
         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-800">Total Votes</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">Get All Polls That User is Participant of and their vote with a link to the poll</dd>
+          <dt class="text-sm font-medium text-gray-800">Created Polls</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">show your created polls</dd>
         </div>
       </dl>
     </div>
