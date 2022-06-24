@@ -11,6 +11,8 @@ router.use(methodOverride("_method", {
 // TODO we have to find a better route
 router.post("/addOption/:id", singlePollController.addAdditionalOption);
 
+router.post("/addParticipant/:id", singlePollController.addNewParticpant, singlePollController.redirectView);
+
 router.post("/vote/:id", singlePollController.postVote, singlePollController.redirectView);
 
 router.post("/", singlePollController.createPoll);
