@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Poll = require("../models/poll");
 const passport = require('passport'); 
+const httpStatus = require("http-status-codes");
 
 const getDate = date => {
     const dateObj = new Date(date);
@@ -34,5 +35,28 @@ module.exports = {
                 console.log(error.message);
                 return [];
             })                          //catch rejected errors that are rejected in promise
+    },
+    respondJSON: (req, res) => {
+        res.json({
+            status: httpStatus.OK,
+            data: res.locals,
+        });
+        console.log("jsonrespond");
+    },
+    errorJSON: (error, req, res, next) => {
+        let errorObject;
+        if(error) {
+            errorObject = {
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: error.message
+            };
+        }
+        else {
+            errorObject = {
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: "Unknown Error."
+            };
+        }
+        res.json(errorObject);
     }
 }
