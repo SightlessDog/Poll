@@ -16,10 +16,7 @@ module.exports = {
         let msgText = "";
         Poll.findById(id).exec().then(re => {
             User.findOne({email: currentUser.email}).exec().then(r => {
-                re.options.find(votedOption => votedOption.name === req.body.option ? votedOption.votes += 1 : null);
-                if (!re.participants.includes(r._id)) {
-                    re.participants.push(r._id);
-                }                 
+                re.options.find(votedOption => votedOption.name === req.body.option ? votedOption.votes += 1 : null);              
                 re.save((error, savedDoc) => {                    
                     req.flash(
                         'success', `Thanks for your vote for  ${req.body.option}!`
@@ -69,6 +66,33 @@ module.exports = {
             })
         })
     },
+    addNewParticpant: (req, res, next) => {
+        let id = req.params.id
+        let mail = req.body.newParticipant;
+        let msg = "";
+        User.find({email: mail}).exec().then(re => {
+            if (re.length === 0) {
+                req.flash("error", `No user found with this mail! ${mail}`);
+                res.locals.redirect = `/singlePoll/${id}`;
+                next();
+            } else {
+                Poll.findById(id).exec().then(response => {
+                    if (response.participants.includes(re._id)) {
+                        req.flash("error", `User ${mail} is already added`);
+                        res.locals.redirect = `/singlePoll/${id}`;
+                        next();
+                    } else {
+                        response.participants.push(re._id);
+                        req.flash("success", "user added!");
+                        response.save((error, savedDoc) => {
+                            res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msg});
+                            if (error) console.log(error);
+                        });
+                    }
+                })
+            }
+        })
+    }, 
     closePoll : (req, res) => {
         //TODO: check if the current user is allowed : only creator can close poll
         let id = req.params.id;
@@ -108,7 +132,7 @@ module.exports = {
             re.closed = false;
             re.save((error, savedDoc) => {
                 res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
-                    if (error) console.log(error);
+                if (error) console.log(error);
             })
         })
     },
