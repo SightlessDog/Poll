@@ -40,7 +40,7 @@
     <form action="/singlePoll/addParticipant/<%= poll._id %>" method="POST">
         <label class="text-white" for="addOption" data-toggle="tooltip" data-placement="left" title="If you want to add a new particpant, please submit here"><b>Add new Particpant:</b></label>            
         </br>
-        <input type="text" name="newParticipant" id="newParticipant" required placeholder="Invite Someone">
+        <input type="text" name="newParticipant" id="newParticipant" required placeholder="Invite By Mail">
         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Invite</button>
         </form>
         <a href="<%=`/singlePoll/closePoll/${poll._id}?_method=POST`%>"><button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Close poll</button></a>
