@@ -31,11 +31,11 @@ router.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
-
+router.use("/api", apiRoutes);
 router.use('/register', userRoutes);
 router.use('/singlePoll', singlePollRoutes);
 router.use('/polls', pollsRoutes);
 router.use('/', homeController.showHome);
-router.use("/api", apiRoutes);
+
 
 module.exports = router;

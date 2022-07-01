@@ -58,5 +58,15 @@ module.exports = {
             };
         }
         res.json(errorObject);
+    },
+    showPollsResponseJSON : (req, res) => {
+        Poll.find({}).exec()           //return promise from find query
+            .then((polls) =>{          //send data to next codeblock
+                res.locals.polls = polls;
+                res.json(res.locals.polls);
+            }).catch((error) => {
+            console.log(error.message);
+            return [];
+        })                          //catch rejected errors that are rejected in promise
     }
 }
