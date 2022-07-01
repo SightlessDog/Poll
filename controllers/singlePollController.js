@@ -77,14 +77,14 @@ module.exports = {
                 next();
             } else {
                 Poll.findById(id).exec().then(response => {                    
-                    if (response.participants.includes(re.id)) {
-                        console.log("participant id: " + re.id);
+                    if (response.participants.includes(re[0]._id)) {
+                        console.log("participant id: " + re[0]._id);
                         req.flash("error", `User ${mail} has been already added`);
                         res.locals.redirect = `/singlePoll/${id}`;
                         next();
                     } else {
-                        response.participants.push(re.id);
-                        console.log("participant id after push: " + re.id);
+                        response.participants.push(re[0].id);
+                        console.log("participant id after push: " + re[0]._id);
                         req.flash("success", "user added!");
                         response.save((error, savedDoc) => {
                             res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msg});
