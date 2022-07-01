@@ -66,7 +66,7 @@ module.exports = {
             })
         })
     },
-    addNewParticpant: (req, res, next) => {
+    addNewParticipant: (req, res, next) => {
         let id = req.params.id
         let mail = req.body.newParticipant;
         let msg = "";
@@ -76,13 +76,15 @@ module.exports = {
                 res.locals.redirect = `/singlePoll/${id}`;
                 next();
             } else {
-                Poll.findById(id).exec().then(response => {
-                    if (response.participants.includes(re._id)) {
-                        req.flash("error", `User ${mail} is already added`);
+                Poll.findById(id).exec().then(response => {                    
+                    if (response.participants.includes(re[0]._id)) {
+                        console.log("participant id: " + re[0]._id);
+                        req.flash("error", `User ${mail} has been already added`);
                         res.locals.redirect = `/singlePoll/${id}`;
                         next();
                     } else {
-                        response.participants.push(re._id);
+                        response.participants.push(re[0].id);
+                        console.log("participant id after push: " + re[0]._id);
                         req.flash("success", "user added!");
                         response.save((error, savedDoc) => {
                             res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msg});
