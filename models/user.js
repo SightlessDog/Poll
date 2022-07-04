@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
+const randToken = require('rand-token');
 
 const bcrypt = require('bcrypt');
 

@@ -18,6 +18,27 @@ module.exports = {
         successRedirect: 'Polls/polls',
         successFlash: "Logged in!"
     }),
+    respondJSON: (req, res) => {
+        res.json({
+            status: httpStatus.OK,
+            data: res.locals
+        });
+    },
+    errorJSON: (error, req, res, next) => {
+        let errorObject;
+        if (error) {
+            errorObject = {
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: error.message
+            };
+        } else {
+            errorObject = {
+                status: httpStatus.OK,
+                message: "Unknown Error."
+            };
+        }
+        res.json(errorObject);
+    },
     showPolls : (req, res) => {
         Poll.find({}).exec()           //return promise from find query
             .then((polls) =>{          //send data to next codeblock
