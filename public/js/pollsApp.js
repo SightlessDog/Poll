@@ -4,10 +4,10 @@ $(document).ready(() => {
         $.get("/polls?format=json", (data) => {
             data.forEach((polls) => {
                 $(".modal-body").append(
-                    `<div>
+                    `<a href="/singlePoll/${polls._id}">
                         <span class="polls-title">  Title: ${polls.title} </span>
                         <div class="polls-description"> Description: ${polls.description} </div>
-                    </div>`
+                    </a>`
                 );
             });
         });
