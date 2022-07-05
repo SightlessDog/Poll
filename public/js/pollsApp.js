@@ -1,15 +1,22 @@
 $(document).ready(() => {
     $("#modal-button").click(() => {
         $(".modal-body").html('');
-        $.get("/polls?format=json", (data) => {
-            data.forEach((polls) => {
-                $(".modal-body").append(
-                    `<a href="/singlePoll/${polls._id}">
-                        <span class="polls-title">  Title: ${polls.title} </span>
-                        <div class="polls-description"> Description: ${polls.description} </div>
-                    </a>`
-                );
-            });
+        $.get("/api/polls", (data) => {
+            if (!data) {
+                return;
+            }
+                data.forEach((poll) => {
+                    console.log(poll , poll.participants);
+                    console.log("Has at least 1 participant? ", poll.participants.length > 0);
+                    if(poll.participants.length > 0) {
+                        $(".modal-body").append(
+                            `<div>
+                        <span class="polls-title">  Title: ${poll.title} </span>
+                        <div class="polls-description"> Description: ${poll.description} </div>                 
+                        </div>`
+                        );
+                    }
+                });
         });
     });
 });
