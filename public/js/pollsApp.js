@@ -1,13 +1,16 @@
 $(document).ready(() => {
     $("#modal-button").click(() => {
         $(".modal-body").html('');
-        $.get("/polls?format=json", (data, res) => {
-            data.forEach((polls) => {
+        $.get("/api/polls", (data) => {
+            if (!data) {
+                return;
+            }
+            data.forEach((poll) => {
                     $(".modal-body").append(
                         `<div>
-                        <span class="polls-title">  Title: ${polls.title} </span>
-                        <div class="polls-description"> Description: ${polls.description} </div>
-                    </div>`
+                        <span class="polls-title">  Title: ${poll.title} </span>
+                        <div class="polls-description"> Description: ${poll.description} </div>
+                        </div>`
                     );
             });
         });

@@ -23,14 +23,11 @@ module.exports = {
         Poll.find({}).exec()           //return promise from find query
             .then((polls) =>{          //send data to next codeblock
                 res.locals.polls = polls;
-                if(req.query.format === "json") {
-                    res.json(res.locals.polls);
-                } else {
                     res.render("Polls/polls", {
                         polls: polls,
                         getDate
                     });
-                }//serve results from db
+                //serve results from db
             }).catch((error) => {
                 console.log(error.message);
                 return [];
