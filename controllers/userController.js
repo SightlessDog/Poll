@@ -1,7 +1,8 @@
 const User = require('../models/user');
 const passport = require('passport'); // will be used later
 const bcrypt = require('bcrypt');
-
+const token = process.env.TOKEN || "pollToken";
+const jsonWebToken = require("jsonwebtoken");
 const { body, validationResult } = require('express-validator');
 
 const getUserInfo = (body) => {
@@ -130,4 +131,19 @@ module.exports = {
   showForgotPassword: (req, res) => {
     res.render('register/forgotPassword');
   },
+  verifyToken: (req, res, next) => {
+    let token = req.query.apiToken;
+    if(token) {
+      User.findOne({ apiToken: token
+      }).then(user => {
+        if(user) next();
+        else next(new Error(Error("Invalid API token.")));
+      }).catch(error => {
+        next(new Error(error.message));
+      });
+    } else {
+      next(new Error("Invalid API token."));
+    }
+  },
+  
 };

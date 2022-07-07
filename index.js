@@ -33,6 +33,13 @@ db.once('open', () => {
 
 app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 3000);
+
+//create token 
+//app.set("token", process.env.TOKEN || "pollToken");
+//app.get("token");
+//how page 328?
+//let apiToken = $("#apiToken").data("token");
+
 app.use(layouts);
 app.use(express.static(__dirname + '/public'));
 app.use(
