@@ -6,9 +6,9 @@ const router = require("express").Router(),
       apiController = require("../controllers/apiController");
 
 router.post("/polls", userController.apiAuthenticate);
-router.use(userController.verifyJWT);
 router.get("/polls", apiController.filterUserPolls, apiController.respondJSON);
 router.get("/allPolls", apiController.showPollsResponseJSON);
+router.use(userController.verifyJWT);
 router.use(apiController.errorJSON);
 
 module.exports = router;
