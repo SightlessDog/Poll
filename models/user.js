@@ -17,6 +17,11 @@ const userSchema = new Schema({
   },
   apiToken: {
     type: String
+  },
+  openPolls: {
+    type: [Schema.Types.ObjectId],
+    ref: "Poll",
+    default: []
   }
 });
 

@@ -48,8 +48,6 @@ app.use(
   })
 );
 app.use(express.json());
-
-
 app.use('/', router);
 app.use(errorController.respondNoResourceFound);
 app.use(errorController.respondInternalError);

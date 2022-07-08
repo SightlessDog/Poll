@@ -5,8 +5,9 @@ const router = require("express").Router(),
       userController = require("../controllers/userController"),
       apiController = require("../controllers/apiController");
 
-router.post("/polls", userController.apiAuthenticate);
 router.get("/polls", apiController.filterUserPolls, apiController.respondJSON);
+router.post("/polls", userController.apiAuthenticate);
+router.post("/poll/:id", apiController.handleNotificationClick);
 router.use(userController.verifyJWT);
 router.use(apiController.errorJSON);
 

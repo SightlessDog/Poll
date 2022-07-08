@@ -65,27 +65,32 @@ var users = [
     {
         name: "sightlessdog",
         email: "sightlessdog@poller.com",
-        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"  
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6",
+        openPolls: [] 
     },
     {
         name: "mrschmoke",
         email: "mrschmoke@poller.com",
-        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"       
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6",
+        openPolls: []       
     },
     {
         name: "mymayu1",
         email: "mymayu1@poller.com",
-        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"        
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6",
+        openPolls: []   
     },
     {
         name: "karmagedon",
         email: "karmagedon@poller.com",
-        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6",
+        openPolls: []
     },
     {
         name: "shirokonto",
         email: "shirokonto@poller.com",
-        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6"    
+        password: "$2b$10$O8/5cJUXWBvXudS0z.q.L.tyUCuf4iRBn6X5f.QK6MsLqqR.RryE6",
+        openPolls: []
     }
 ];
 
@@ -148,7 +153,7 @@ users.forEach((u) => {
         name: u.name,
         email: u.email,
         password: u.password,
-        polls: u.polls
+        openPolls: u.openPolls
     }));
 });
 
