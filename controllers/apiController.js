@@ -1,5 +1,6 @@
 const httpStatus = require("http-status-codes");
 const Poll = require("../models/poll");
+const User = require("../models/user");
 
 module.exports = {
         respondJSON: (req, res) => {

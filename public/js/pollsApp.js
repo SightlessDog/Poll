@@ -6,8 +6,9 @@ $(document).ready(() => {
                 return;
             }
                 data.forEach((poll) => {
+                        const closed = poll.closed ? "/closed" : "" 
                         $(".modal-body").append(
-                            `<a data-id="${poll._id}" href="/singlePoll/${poll._id}" onclick="handlePollClick(event)">
+                            `<a data-id="${poll._id}" href="/singlePoll/${poll._id}${closed}" onclick="handlePollClick(event)">
                         <span class="polls-title">  Title: ${poll.title} </span>
                         <div class="polls-description"> Description: ${poll.description} </div>                 
                         </a>`
