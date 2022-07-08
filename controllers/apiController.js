@@ -40,8 +40,6 @@ respondJSON: (req, res) => {
 
         Poll.find({}).exec()           //return promise from find query
             .then((polls) => {          //send data to next codeblock
-                console.log("Found polls ", polls);
-                console.log("user id ", currentUser._id);
                 filteredPolls = polls.filter(poll => poll.participants.includes(currentUser._id));
                 res.locals.polls = filteredPolls;
                 console.log("Filtered polls ", filteredPolls);
