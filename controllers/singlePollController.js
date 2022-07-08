@@ -60,6 +60,11 @@ module.exports = {
             if (!re.options.includes(additionalOption)) {
                 re.options.push(additionalOption);
             }
+            re.participants.map(participant => {
+                User.findByIdAndUpdate(participant, {
+                    "$push" : {"openPolls" : id}
+                }).exec()
+            })
             re.save((error, savedDoc) => {
                 res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msgText});
                 if (error) console.log(error);
@@ -78,18 +83,20 @@ module.exports = {
             } else {
                 Poll.findById(id).exec().then(response => {                    
                     if (response.participants.includes(re[0]._id)) {
-                        console.log("participant id: " + re[0]._id);
                         req.flash("error", `User ${mail} has been already added`);
                         res.locals.redirect = `/singlePoll/${id}`;
                         next();
                     } else {
                         response.participants.push(re[0].id);
-                        console.log("participant id after push: " + re[0]._id);
-                        req.flash("success", "user added!");
-                        response.save((error, savedDoc) => {
-                            res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msg});
-                            if (error) console.log(error);
-                        });
+                        User.findByIdAndUpdate(re[0].id,  {
+                            "$push" : {"openPolls" : id}
+                        }).exec().then(() => {
+                            req.flash("success", "user added!");
+                            response.save((error, savedDoc) => {
+                                res.render("SinglePoll/singlePoll", {poll : savedDoc, notification : msg});
+                                if (error) console.log(error);
+                            });
+                        })
                     }
                 })
             }
@@ -106,7 +113,12 @@ module.exports = {
                 let msgText = "There is a tie between options for votes or every vote is zero";          
                 res.render("SinglePoll/singlePoll", {poll : re, notification : msgText});
             } else{
-                re.closed = true;            
+                re.closed = true;
+                re.participants.map(participant => {
+                    User.findByIdAndUpdate(participant, {
+                        "$push" : {"openPolls" : id}
+                    }).exec()
+                })
                 re.save((error, savedDoc) => {
                     res.render("SinglePoll/closedPoll", {poll : savedDoc, finalResult : highestVote});
                     if (error) console.log(error);
@@ -165,6 +177,11 @@ module.exports = {
                 deadline: req.body.deadline,
                 options : optionsPair,
             } 
+            poll.participants.map(participant => {
+                User.findByIdAndUpdate(participant, {
+                    "$push" : {"openPolls" : id}
+                }).exec()
+            })
             Poll.findByIdAndUpdate(id, {
                 $set: pollParams
             }).then(poll => {

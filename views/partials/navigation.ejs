@@ -62,6 +62,17 @@
             data-target="#defaultModal"
             class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
           >
+            <% if (locals.hasNotification) { %>
+            <div
+              style="
+                position: absolute;
+                background-color: red;
+                border-radius: 9999px;
+                width: 10px;
+                height: 10px;
+              "
+            ></div>
+            <% } %>
             <span class="sr-only">View notifications</span>
             <!-- Heroicon name: outline/bell -->
             <svg

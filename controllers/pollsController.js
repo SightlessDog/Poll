@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Poll = require("../models/poll");
+const User = require("../models/user");
 const passport = require('passport'); 
 const httpStatus = require("http-status-codes");
 const {showPolls, filterUserPolls} = require("./pollsController");
@@ -33,5 +34,5 @@ module.exports = {
                 console.log(error.message);
                 return [];
             })                          //catch rejected errors that are rejected in promise
-    }
+    },
 }
