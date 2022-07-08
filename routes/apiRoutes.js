@@ -2,7 +2,7 @@
 
 const router = require("express").Router(),
       pollsController = require("../controllers/pollsController"),
-      userController = require("../controllers/userController");
+      userController = require("../controllers/userController"),
       apiController = require("../controllers/apiController");
 
 router.post("/polls", userController.apiAuthenticate);
