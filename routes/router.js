@@ -49,6 +49,7 @@ router.use("/api", apiRoutes);
 router.use('/register', userRoutes);
 router.use('/singlePoll', singlePollRoutes);
 router.use('/polls', pollsRoutes);
+router.use('/chat', homeController.chat);
 router.use('/', homeController.showHome);
 
 
