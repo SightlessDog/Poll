@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 const router = require('./routes/router');
 const passport = require('passport');
+
 const User = require('./models/user'); //needed functionality for passport to work
 const expressSession = require('express-session');
 
