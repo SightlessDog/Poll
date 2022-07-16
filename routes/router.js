@@ -4,9 +4,10 @@ const router = require('express').Router(),
   userRoutes = require('./user'),
   singlePollRoutes = require('./singlePoll'),
   pollsRoutes = require('./polls'),
-  homeController = require("../controllers/homeController"),
+  homeRoutes = require('./home'),
   apiRoutes = require("./apiRoutes");
-const User = require("../models/user")
+
+const User = require("../models/user");
 
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -49,8 +50,7 @@ router.use("/api", apiRoutes);
 router.use('/register', userRoutes);
 router.use('/singlePoll', singlePollRoutes);
 router.use('/polls', pollsRoutes);
-router.use('/chat', homeController.chat);
-router.use('/', homeController.showHome);
+router.use('', homeRoutes);
 
 
 module.exports = router;
